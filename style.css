@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk 
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.4.0
+Version: 1.4.1
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -4687,9 +4687,12 @@ hr[data-ke-style='style8'],
   .header .area-gnb .category_list>li>a.link_item {
     position: relative !important;
     z-index: 100002 !important;
-    display: block !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     width: 100% !important;
     padding: 10px 14px !important;
+    line-height: 1.2 !important;
     font-size: 15px !important;
     font-weight: 700 !important;
     color: #444 !important;
@@ -7693,40 +7696,46 @@ body:has(.home-layout) .header .area-gnb {
 }
 
 body:has(.home-layout) .header .area-gnb .category_list {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 7px;
-  width: 100%;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 7px !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
 }
 
 body:has(.home-layout) .header .area-gnb .category_list>li {
-  flex: 0 0 auto;
+  flex: 0 0 auto !important;
+  min-width: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 body:has(.home-layout) .header .area-gnb .category_list>li>a.link_item {
-  min-width: 82px;
-  height: 34px;
-  padding: 0 15px;
-  border: 1px solid #e8ebef;
-  border-radius: 7px;
-  background: #fff;
-  box-shadow: 0 2px 7px rgba(0, 0, 0, .045);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  font-size: 12px;
-  font-weight: 600;
-  color: #333;
-  text-decoration: none;
-  transition: all .18s ease;
+  min-width: 82px !important;
+  height: 34px !important;
+  padding: 0 15px !important;
+  line-height: 1 !important;
+  border: 1px solid #e8ebef !important;
+  border-radius: 7px !important;
+  background: #fff !important;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, .045) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  text-decoration: none !important;
+  transition: all .18s ease !important;
 }
 
 body:has(.home-layout) .header .area-gnb .category_list>li>a.link_item:hover {
-  border-color: #d7dce2;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
-  transform: translateY(-1px);
+  border-color: #d7dce2 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .08) !important;
+  transform: translateY(-1px) !important;
 }
 
 body:has(.home-layout) .header .area-gnb .category_list .sub_category_list {
