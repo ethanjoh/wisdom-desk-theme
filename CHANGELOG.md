@@ -10,7 +10,6 @@
 - 워드프레스 테마 메타데이터 헤더 개선 (GitHub 테마 자동 업데이트 호환 지원)
 
 ### 주요 결정 사항
-- `style.css` 테마 이름을 `Wisdom Desk (Github)`로 변경
 - `style.css` 테마 헤더에 `GitHub Theme URI` 필드 지정 및 메타데이터 정렬
 
 ### 수정한 파일
