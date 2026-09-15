@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.4.2
+Version: 1.4.3
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -7707,7 +7707,7 @@ body:has(.archive-modern-list) .header .area-gnb .category_list {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
-  gap: 7px !important;
+  gap: 12px !important;
   width: 100% !important;
   padding: 0 !important;
   margin: 0 auto !important;
@@ -7716,37 +7716,41 @@ body:has(.archive-modern-list) .header .area-gnb .category_list {
 body:has(.home-layout) .header .area-gnb .category_list>li,
 body:has(.archive-modern-list) .header .area-gnb .category_list>li {
   flex: 0 0 auto !important;
-  min-width: auto !important;
+  min-width: 135px !important;
   padding: 0 !important;
   margin: 0 !important;
 }
 
 body:has(.home-layout) .header .area-gnb .category_list>li>a.link_item,
 body:has(.archive-modern-list) .header .area-gnb .category_list>li>a.link_item {
-  min-width: 82px !important;
-  height: 34px !important;
-  padding: 0 15px !important;
-  line-height: 1 !important;
-  border: 1px solid #e8ebef !important;
-  border-radius: 7px !important;
-  background: #fff !important;
-  box-shadow: 0 2px 7px rgba(0, 0, 0, .045) !important;
+  position: relative !important;
+  z-index: 100002 !important;
+  min-width: 135px !important;
+  width: 100% !important;
+  padding: 10px 14px !important;
+  line-height: 1.2 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #444 !important;
+  text-decoration: none !important;
+  background: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
   box-sizing: border-box !important;
-  font-size: 12px !important;
-  font-weight: 600 !important;
-  color: #333 !important;
-  text-decoration: none !important;
-  transition: all .18s ease !important;
+  transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 body:has(.home-layout) .header .area-gnb .category_list>li>a.link_item:hover,
 body:has(.archive-modern-list) .header .area-gnb .category_list>li>a.link_item:hover {
-  border-color: #d7dce2 !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, .08) !important;
-  transform: translateY(-1px) !important;
+  color: #F05A3C !important;
+  background: #fafafa !important;
+  border-color: #F05A3C !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 16px rgba(240, 90, 60, 0.12), 0 3px 6px rgba(0, 0, 0, 0.05) !important;
 }
 
 body:has(.home-layout) .header .area-gnb .category_list .sub_category_list,
