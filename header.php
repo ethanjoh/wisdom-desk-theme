@@ -82,6 +82,23 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 					<strong><?php echo esc_html( get_bloginfo( 'description' ) ?: get_bloginfo( 'name' ) ); ?></strong>
 				</div>
 			</div>
+		<?php elseif ( is_category() ) : ?>
+			<?php
+			$cat_desc   = category_description();
+			$cat_title  = single_cat_title( '', false );
+			$banner_txt = $cat_desc ? wp_strip_all_tags( $cat_desc ) : $cat_title;
+			?>
+			<div class="home-hero sub-hero">
+				<div class="home-hero-inner">
+					<strong><?php echo esc_html( $banner_txt ); ?></strong>
+				</div>
+			</div>
+		<?php elseif ( is_archive() || is_search() || is_tag() ) : ?>
+			<div class="home-hero sub-hero">
+				<div class="home-hero-inner">
+					<strong><?php the_archive_title(); ?></strong>
+				</div>
+			</div>
 		<?php endif; ?>
 	</header>
 	<!-- // header -->

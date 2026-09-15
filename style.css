@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.4.0
+Version: 1.4.2
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -4687,9 +4687,12 @@ hr[data-ke-style='style8'],
   .header .area-gnb .category_list>li>a.link_item {
     position: relative !important;
     z-index: 100002 !important;
-    display: block !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     width: 100% !important;
     padding: 10px 14px !important;
+    line-height: 1.2 !important;
     font-size: 15px !important;
     font-weight: 700 !important;
     color: #444 !important;
@@ -7661,79 +7664,98 @@ body#tt-body-index .area-paging-more {
 }
 
 /* Keep the top chrome close to the 900px reference width. */
-body:has(.home-layout) .header .inner-header {
+body:has(.home-layout) .header .inner-header,
+body:has(.archive-modern-list) .header .inner-header {
   max-width: 900px;
 }
 
-body:has(.home-layout) .header {
+body:has(.home-layout) .header,
+body:has(.archive-modern-list) .header {
   border-bottom: 0;
 }
 
-body:has(.home-layout) .header .box-header {
+body:has(.home-layout) .header .box-header,
+body:has(.archive-modern-list) .header .box-header {
   min-height: 58px;
 }
 
-body:has(.home-layout) .header .title-logo {
+body:has(.home-layout) .header .title-logo,
+body:has(.archive-modern-list) .header .title-logo {
   margin: 15px 0 13px;
 }
 
-body:has(.home-layout) .header .area-align {
+body:has(.home-layout) .header .area-align,
+body:has(.archive-modern-list) .header .area-align {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 47px;
 }
 
-body:has(.home-layout) .header .area-slogun {
+body:has(.home-layout) .header .area-slogun,
+body:has(.archive-modern-list) .header .area-slogun {
   display: none;
 }
 
-body:has(.home-layout) .header .area-gnb {
+body:has(.home-layout) .header .area-gnb,
+body:has(.archive-modern-list) .header .area-gnb {
   width: 100%;
 }
 
-body:has(.home-layout) .header .area-gnb .category_list {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 7px;
-  width: 100%;
+body:has(.home-layout) .header .area-gnb .category_list,
+body:has(.archive-modern-list) .header .area-gnb .category_list {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 7px !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
 }
 
-body:has(.home-layout) .header .area-gnb .category_list>li {
-  flex: 0 0 auto;
+body:has(.home-layout) .header .area-gnb .category_list>li,
+body:has(.archive-modern-list) .header .area-gnb .category_list>li {
+  flex: 0 0 auto !important;
+  min-width: auto !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
-body:has(.home-layout) .header .area-gnb .category_list>li>a.link_item {
-  min-width: 82px;
-  height: 34px;
-  padding: 0 15px;
-  border: 1px solid #e8ebef;
-  border-radius: 7px;
-  background: #fff;
-  box-shadow: 0 2px 7px rgba(0, 0, 0, .045);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  font-size: 12px;
-  font-weight: 600;
-  color: #333;
-  text-decoration: none;
-  transition: all .18s ease;
+body:has(.home-layout) .header .area-gnb .category_list>li>a.link_item,
+body:has(.archive-modern-list) .header .area-gnb .category_list>li>a.link_item {
+  min-width: 82px !important;
+  height: 34px !important;
+  padding: 0 15px !important;
+  line-height: 1 !important;
+  border: 1px solid #e8ebef !important;
+  border-radius: 7px !important;
+  background: #fff !important;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, .045) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: #333 !important;
+  text-decoration: none !important;
+  transition: all .18s ease !important;
 }
 
-body:has(.home-layout) .header .area-gnb .category_list>li>a.link_item:hover {
-  border-color: #d7dce2;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
-  transform: translateY(-1px);
+body:has(.home-layout) .header .area-gnb .category_list>li>a.link_item:hover,
+body:has(.archive-modern-list) .header .area-gnb .category_list>li>a.link_item:hover {
+  border-color: #d7dce2 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .08) !important;
+  transform: translateY(-1px) !important;
 }
 
-body:has(.home-layout) .header .area-gnb .category_list .sub_category_list {
+body:has(.home-layout) .header .area-gnb .category_list .sub_category_list,
+body:has(.archive-modern-list) .header .area-gnb .category_list .sub_category_list {
   display: none;
 }
 
-body:has(.home-layout) .header .util.use-top {
+body:has(.home-layout) .header .util.use-top,
+body:has(.archive-modern-list) .header .util.use-top {
   position: absolute;
   top: 14px;
   right: 0;
@@ -7741,11 +7763,14 @@ body:has(.home-layout) .header .util.use-top {
 }
 
 body:has(.home-layout) .header .util.use-top .box-search,
-body:has(.home-layout) .header .util.use-top form {
+body:has(.home-layout) .header .util.use-top form,
+body:has(.archive-modern-list) .header .util.use-top .box-search,
+body:has(.archive-modern-list) .header .util.use-top form {
   width: 100%;
 }
 
-body:has(.home-layout) .header .util.use-top input {
+body:has(.home-layout) .header .util.use-top input,
+body:has(.archive-modern-list) .header .util.use-top input {
   width: 100%;
   height: 28px;
   padding: 0 25px 0 3px;
@@ -7945,12 +7970,15 @@ body:has(.home-layout) .area-main {
 
 /* Mobile: turn the desktop composition into a single readable column. */
 @media screen and (max-width: 1060px) {
-  body:has(.home-layout) .header .inner-header {
+  body:has(.home-layout) .header .inner-header,
+  body:has(.archive-modern-list) .header .inner-header {
     max-width: 100%;
   }
 
   body:has(.home-layout) .header .area-align,
-  body:has(.home-layout) .header .util.use-top {
+  body:has(.home-layout) .header .util.use-top,
+  body:has(.archive-modern-list) .header .area-align,
+  body:has(.archive-modern-list) .header .util.use-top {
     display: none !important;
   }
 

@@ -13,17 +13,6 @@ $description = is_category() ? category_description() : '';
 ?>
 
 <main class="archive-modern-list">
-	<?php if ( is_category() && $description ) : ?>
-		<div class="category-banner-wrp">
-			<div class="category-banner">
-				<div class="category-banner-inner">
-					<div class="category-description-box">
-						<strong class="category-description"><?php echo wp_kses_post( $description ); ?></strong>
-					</div>
-				</div>
-			</div>
-		</div>
-	<?php endif; ?>
 
 	<div class="archive-heading">
 		<h2 class="title-search title-border">
