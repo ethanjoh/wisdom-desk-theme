@@ -1,5 +1,7 @@
 <?php // 메인 화면(front-page) 레이아웃 및 인터랙티브 모니터 카테고리 링크 템플릿
 /**
+ * Template Name: 프론트 페이지 (인터랙티브 데스크)
+ *
  * The template for displaying the front page.
  *
  * Displays the interactive desk hero section with clickable monitors
@@ -13,22 +15,11 @@ get_header();
 /**
  * 카테고리 슬러그 또는 이름을 기준으로 카테고리 링크 및 정보를 찾는 헬퍼 함수
  */
-function wisdom_desk_find_category( $candidates, $default_slug, $default_name ) {
-	foreach ( (array) $candidates as $candidate ) {
-		// 1. 슬러그로 찾기
-		$cat = get_category_by_slug( $candidate );
-		if ( $cat && ! is_wp_error( $cat ) ) {
-			return array(
-				'url'   => get_category_link( $cat->term_id ),
-				'name'  => $cat->name,
-				'count' => $cat->count,
-				'found' => true,
-			);
-		}
-		// 2. 카테고리 이름으로 찾기
-		$cat_id = get_cat_ID( $candidate );
-		if ( $cat_id ) {
-			$cat = get_category( $cat_id );
+if ( ! function_exists( 'wisdom_desk_find_category' ) ) {
+	function wisdom_desk_find_category( $candidates, $default_slug, $default_name ) {
+		foreach ( (array) $candidates as $candidate ) {
+			// 1. 슬러그로 찾기
+			$cat = get_category_by_slug( $candidate );
 			if ( $cat && ! is_wp_error( $cat ) ) {
 				return array(
 					'url'   => get_category_link( $cat->term_id ),
@@ -37,16 +28,29 @@ function wisdom_desk_find_category( $candidates, $default_slug, $default_name ) 
 					'found' => true,
 				);
 			}
+			// 2. 카테고리 이름으로 찾기
+			$cat_id = get_cat_ID( $candidate );
+			if ( $cat_id ) {
+				$cat = get_category( $cat_id );
+				if ( $cat && ! is_wp_error( $cat ) ) {
+					return array(
+						'url'   => get_category_link( $cat->term_id ),
+						'name'  => $cat->name,
+						'count' => $cat->count,
+						'found' => true,
+					);
+				}
+			}
 		}
-	}
 
-	// 일치하는 카테고리가 없는 경우 fallback URL 생성
-	return array(
-		'url'   => home_url( '/category/' . $default_slug . '/' ),
-		'name'  => $default_name,
-		'count' => 0,
-		'found' => false,
-	);
+		// 일치하는 카테고리가 없는 경우 fallback URL 생성
+		return array(
+			'url'   => home_url( '/category/' . $default_slug . '/' ),
+			'name'  => $default_name,
+			'count' => 0,
+			'found' => false,
+		);
+	}
 }
 
 // 3개 모니터에 매핑할 카테고리 데이터 조회
@@ -54,7 +58,7 @@ $cat_lifelog = wisdom_desk_find_category( array( 'lifelog', 'life-log', 'life', 
 $cat_travel  = wisdom_desk_find_category( array( 'travel', 'trip', '여행' ), 'travel', '여행' );
 $cat_book    = wisdom_desk_find_category( array( 'book-review', 'book', 'books', '독서', '북리뷰' ), 'book-review', '북리뷰' );
 
-$desk_image_url = get_template_directory_uri() . '/images/frontpage.webp';
+$desk_image_url = get_stylesheet_directory_uri() . '/images/frontpage.webp';
 ?>
 
 <!-- =======================================================================

@@ -11,6 +11,9 @@
 
 ### 주요 결정 사항
 - `front-page.php` 템플릿 신규 생성하여 워드프레스 루트 접속 시 최우선 렌더링되도록 구현
+  - 페이지 편집 화면에서 직접 지정할 수 있도록 `Template Name: 프론트 페이지 (인터랙티브 데스크)` 템플릿 메타 선언 추가
+  - 이미지 참조 경로를 `get_stylesheet_directory_uri()`로 통일하고 함수 중복 정의 방지 처리
+- `functions.php`의 `TISTORY_STYLE_VERSION`을 `1.4.6`으로 동기화하여 `style.css` 브라우저 캐시 버스팅 적용
 - 일러스트 내 원근감이 적용된 3개 모니터 화면에 1:1 반응형 SVG 다각형 오버레이(`<polygon>`) 링크 매핑
   - 왼쪽 모니터: 라이프로그 (Lifelog)
   - 가운데 모니터: 여행 (Travel)
@@ -21,6 +24,7 @@
 
 ### 수정한 파일
 - front-page.php (신규 생성)
+- functions.php
 - style.css
 - CHANGELOG.md
 
