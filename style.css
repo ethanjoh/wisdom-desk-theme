@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.1
+Version: 1.6.3
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -5386,9 +5386,14 @@ hr[data-ke-style='style8'],
     height: 22px !important;
   }
 
-  /* 서랍 내부 불필요한 위젯 숨김 (최근댓글, 최근글/인기글, 하단 중복 카테고리 위젯/블록) */
+  /* 서랍 내부 불필요한 위젯 숨김 (최근댓글, 최근글/인기글, 카테고리 밑 중복 카테고리/검색 위젯) */
   .area-aside .box-reply,
   .area-aside .box-recent,
+  .area-aside .widget_search,
+  .area-aside .wp-block-search,
+  .area-aside .box-sidebar:has(.wp-block-search),
+  .area-aside .box-sidebar:has(.widget_search),
+  .area-aside .widget_block:has(.wp-block-search),
   .area-aside .widget_categories,
   .area-aside .wp-block-categories,
   .area-aside .wp-block-categories-list,
@@ -5558,6 +5563,79 @@ hr[data-ke-style='style8'],
   .area-aside .box-category .sub_category_list li a.link_sub_item:hover .c_cnt {
     color: #f05a3c !important;
     background: #fef2f0 !important;
+  }
+
+  /* 모바일 서랍 사이드바 위젯 영역: 모던 라운드 카드 박스 디자인 */
+  .area-aside .box-sidebar {
+    display: block !important;
+    width: 100% !important;
+    background: #ffffff !important;
+    border: 1px solid #eaeaea !important;
+    border-radius: 14px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.03) !important;
+    margin-bottom: 20px !important;
+    padding: 16px 14px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* 위젯 제목 */
+  .area-aside .box-sidebar .title-sidebar,
+  .area-aside .box-sidebar .wp-block-heading,
+  .area-aside .box-sidebar h2,
+  .area-aside .box-sidebar h3 {
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    color: #1a202c !important;
+    margin: 0 0 12px 0 !important;
+    padding-bottom: 8px !important;
+    border-bottom: 1px solid #f1f5f9 !important;
+    display: block !important;
+    line-height: 1.4 !important;
+  }
+
+  /* 위젯 리스트 & 링크 */
+  .area-aside .box-sidebar ul,
+  .area-aside .box-sidebar ol {
+    margin: 0 !important;
+    padding: 0 !important;
+    list-style: none !important;
+  }
+
+  .area-aside .box-sidebar li {
+    margin: 0 !important;
+    padding: 7px 0 !important;
+    border-bottom: 1px solid #f8fafc !important;
+    list-style: none !important;
+  }
+
+  .area-aside .box-sidebar li:last-child {
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+  }
+
+  .area-aside .box-sidebar a {
+    text-decoration: none !important;
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    color: #4b5563 !important;
+    display: inline-block !important;
+    transition: color 0.15s ease !important;
+    word-break: keep-all !important;
+  }
+
+  .area-aside .box-sidebar a:hover,
+  .area-aside .box-sidebar a:active {
+    color: #f05a3c !important;
+    text-decoration: none !important;
+  }
+
+  /* 안내 문구 (댓글 없음 등) */
+  .area-aside .box-sidebar p {
+    font-size: 13px !important;
+    color: #94a3b8 !important;
+    margin: 0 !important;
+    padding: 4px 0 !important;
   }
 
   /* ========================================================

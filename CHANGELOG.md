@@ -1,6 +1,60 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.3] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 모바일 메뉴(사이드바 서랍) 내 사이드바 위젯들(Recent Posts, Recent Comments, Archives 등)을 각각 모던 라운드 카드 박스 형태로 개편
+
+### 주요 결정 사항
+- `style.css`:
+  - 모바일 반응형(`.area-aside .box-sidebar`)에 상단 프로필 및 카테고리 박스와 통일된 모던 카드 스타일 적용 (화이트 카드 배경, 14px 둥근 모서리, `border: 1px solid #eaeaea`, 부드러운 입체 그림자 `box-shadow`)
+  - 위젯 제목(`title-sidebar`, `wp-block-heading`, `h2`, `h3`)에 15px 볼드, 하단 구분선(`border-bottom: 1px solid #f1f5f9`) 및 여백 적용
+  - 위젯 내부 목록 링크의 텍스트 밑줄 제거(`text-decoration: none`), 항목별 은은한 하단 구분선 및 터치/호버 포인트 컬러 적용
+  - 빈 댓글 안내문 등 위젯 안내 문구 스타일 정돈
+  - 테마 헤더 버전을 `1.6.3`으로 상향
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.3`으로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.3 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- Recent Posts, Recent Comments, Archives 등 개별 위젯의 카드형 UI 및 링크 스타일 유효성 검증 완료
+
+## [1.6.2] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 모바일 메뉴(사이드바 서랍) 내 카테고리 바로 밑의 검색 위젯/블록만 선별 숨김 처리하고 맨 하단의 검색 폼은 노출 유지
+
+### 주요 결정 사항
+- `style.css`:
+  - 모바일 반응형(`@media screen and (max-width: 1060px)`) 숨김 규칙에 사이드바 검색 위젯 선택자(`.area-aside .widget_search`, `.area-aside .wp-block-search`, `.area-aside .box-sidebar:has(.wp-block-search)` 등)를 추가하여 카테고리 바로 밑에 중복 노출되던 블록 검색창을 깔끔하게 제거
+  - 서랍 맨 하단에 위치한 전용 검색창(`.area-aside .util.use-sidebar`)은 숨김 대상에서 제외하여 그대로 노출 유지
+  - 테마 헤더 버전을 `1.6.2`로 상향
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.2`로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.2 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- 카테고리 바로 밑 검색 위젯 숨김 및 맨 하단 검색창 유지 검증 완료
+
 ## [1.6.1] - 2026-09-16
 
 ### 변경 날짜
