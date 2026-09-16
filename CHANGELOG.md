@@ -1,6 +1,32 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.5.8] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 모바일 메뉴(사이드바 서랍) 열람 시 하단에 중복 노출되던 워드프레스 카테고리 위젯/블록("Categories") 숨김 처리
+
+### 주요 결정 사항
+- `style.css`:
+  - 모바일 반응형(`@media screen and (max-width: 1060px)`) 서랍(`.area-aside`) 내 불필요한 위젯 숨김 목록에 카테고리 클래식 위젯 및 구텐베르크 카테고리 블록 선택자(`.widget_categories`, `.wp-block-categories`, `.box-sidebar:has(...)` 등) 추가
+  - 상단 테마 고유의 프로필 및 2depth 카테고리 네비게이션(`.box-category`)만 깔끔하게 유지되고, 하단에 중복 출력되던 기본 영문 "Categories" 목록 완전 제거
+  - 테마 헤더 버전을 `1.5.8`로 상향
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.5.8`로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.5.8 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- 모바일 서랍 내 중복 위젯 숨김 셀렉터 유효성 검증 완료
+
 ## [1.5.7] - 2026-09-16
 
 ### 변경 날짜

@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.5.7
+Version: 1.5.8
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -5386,9 +5386,23 @@ hr[data-ke-style='style8'],
     height: 22px !important;
   }
 
-  /* 서랍 내부 불필요한 위젯 숨김 (최근댓글, 최근글/인기글) */
+  /* 서랍 내부 불필요한 위젯 숨김 (최근댓글, 최근글/인기글, 하단 중복 카테고리 위젯/블록) */
   .area-aside .box-reply,
-  .area-aside .box-recent {
+  .area-aside .box-recent,
+  .area-aside .widget_categories,
+  .area-aside .wp-block-categories,
+  .area-aside .wp-block-categories-list,
+  .area-aside .box-sidebar:has(.wp-block-categories),
+  .area-aside .box-sidebar:has(.wp-block-categories-list),
+  .area-aside .box-sidebar:has(.widget_categories),
+  .area-aside .box-sidebar:has(a[href*="/category/"]),
+  .area-aside .widget_block:has(.wp-block-categories),
+  .area-aside .widget_block:has(.wp-block-categories-list),
+  .area-aside .widget_block:has(a[href*="/category/"]),
+  .area-aside h2.wp-block-heading:has(+ .wp-block-categories),
+  .area-aside h2.wp-block-heading:has(+ .wp-block-categories-list),
+  .area-aside .wp-block-heading + .wp-block-categories,
+  .area-aside .wp-block-heading + .wp-block-categories-list {
     display: none !important;
   }
 
