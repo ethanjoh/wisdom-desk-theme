@@ -1,6 +1,61 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.1] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 모바일 메뉴(사이드바 서랍) 내 카테고리 영역을 모던 라운드 카드 박스 UI로 전면 개편
+
+### 주요 결정 사항
+- `style.css`:
+  - 모바일 반응형(`.area-aside .box-category`)에 흰색 배경, 부드러운 둥근 모서리(`border-radius: 14px`), 섬세한 테두리(`border: 1px solid #eaeaea`) 및 은은한 입체 그림자(`box-shadow`) 적용
+  - 카테고리 링크의 텍스트 밑줄 제거(`text-decoration: none`) 및 터치 최적화 패딩 적용
+  - 대분류 항목을 flex 구조로 재배치하고 하단에 은은한 구분선(`border-bottom: 1px solid #f5f5f5`) 추가
+  - 2depth 서브카테고리에 좌측 트리 인디케이터 라인(`border-left: 2px solid #eef2f6`)을 추가하여 시각적 계층 구조 강화
+  - 글 수 표시(`c_cnt`)를 미니 캡슐 뱃지(`background: #f3f4f6`, `border-radius: 10px`) 형태로 개선하고 터치/호버 시 브랜드 포인트 컬러 반영
+  - 테마 헤더 버전을 `1.6.1`로 상향
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.1`로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.1 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- 모바일 서랍 내 카테고리 라운드 박스 및 서브 항목 스타일 유효성 검증 완료
+
+## [1.6.0] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 모바일 메뉴(사이드바 서랍) 하단 검색 위젯/블록 및 검색 폼 복원
+
+### 주요 결정 사항
+- `style.css`:
+  - 모바일 반응형(`@media screen and (max-width: 1060px)`) 서랍(`.area-aside`) 내 불필요 위젯 숨김 목록에서 검색창 관련 선택자(`.util.use-sidebar`, `form[role="search"]`, `.searchform`, `.widget_search`, `.wp-block-search`, `.box-sidebar:has(.wp-block-search)` 등) 제거
+  - 모바일 메뉴 하단에 검색 위젯/블록이 다시 정상 출력되도록 복원 완료
+  - 테마 헤더 버전을 `1.6.0`으로 상향
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.0`으로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.0 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- 모바일 서랍 내 검색 위젯 복원 확인
+
 ## [1.5.9] - 2026-09-16
 
 ### 변경 날짜
