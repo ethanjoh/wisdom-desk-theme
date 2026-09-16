@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.4.6
+Version: 1.4.7
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -8981,4 +8981,36 @@ body:has(.home-layout) .area-main {
   .desk-quick-sub {
     display: none;
   }
+}
+
+/* ========================================================================
+   VERSION 1.4.7 — Front-page Navigation Bar & Article Sections Hidden
+   - 프론트 페이지(front-page.php)에서 상단 카테고리 네비게이션 바(.area-gnb) 숨김
+   - 데스크 일러스트 독립 랜딩 페이지 중앙 정렬 및 여백 최적화
+   ======================================================================== */
+body:has(.frontpage-hero) .header .area-gnb,
+body.home:has(.frontpage-hero) .header .area-gnb {
+  display: none !important;
+}
+
+body:has(.frontpage-hero) #container {
+  margin-top: 30px;
+}
+
+body:has(.frontpage-hero) .main {
+  max-width: 1480px !important;
+  margin: 0 auto !important;
+  float: none !important;
+}
+
+body:has(.frontpage-hero) .area-main {
+  display: block !important;
+  max-width: 1480px !important;
+  width: 100% !important;
+  float: none !important;
+  margin: 0 auto !important;
+}
+
+body:has(.frontpage-hero) .frontpage-hero {
+  margin: 0 auto 60px;
 }

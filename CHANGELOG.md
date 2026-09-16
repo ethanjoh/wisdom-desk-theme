@@ -1,6 +1,29 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.4.7] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 프론트 페이지(`front-page.php`) 상단 카테고리 네비게이션 바(GNB) 숨김 및 하단 최신 글/카테고리 글 섹션 제거하여 독립형 일러스트 랜딩 페이지로 전환
+
+### 주요 결정 사항
+- `front-page.php`에서 최신 글 루프(`.home-layout`) 및 카테고리별 글 섹션(`.home-category-sections`) 코드 블록 완전 삭제
+- `style.css`에서 `body:has(.frontpage-hero) .header .area-gnb`를 숨김 처리(`display: none !important`)하여 화면 시선을 데스크 일러스트에 집중
+- `.area-main` 및 `.main` 너비를 1480px 단일 중앙 정렬로 최적화하여 2열 그리드 종속 탈피 및 균형 잡힌 랜딩 페이지 레이아웃 구축
+- `functions.php` 및 `style.css` 버전을 `1.4.7`로 일치시켜 브라우저 캐시 버스팅 적용
+
+### 수정한 파일
+- front-page.php
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l` 문법 검사 통과 및 템플릿/스타일 반영 확인
+
 ## [1.4.6] - 2026-09-16
 
 ### 변경 날짜
