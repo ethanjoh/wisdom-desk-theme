@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			</div>
 
 			<div class="area-align">
-				<?php if ( is_active_sidebar( 'sidebar-main' ) && get_bloginfo( 'description' ) ) : ?>
+				<?php if ( ! is_front_page() && is_active_sidebar( 'sidebar-main' ) && get_bloginfo( 'description' ) ) : ?>
 					<div class="area-slogun">
 						<strong><?php bloginfo( 'name' ); ?></strong>
 						<?php if ( get_bloginfo( 'description' ) ) : ?>
@@ -76,7 +76,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 		</div>
 		<!-- // inner-header -->
 
-		<?php if ( is_home() || is_front_page() ) : ?>
+		<?php if ( is_home() && ! is_front_page() ) : ?>
 			<div class="home-hero">
 				<div class="home-hero-inner">
 					<strong><?php echo esc_html( get_bloginfo( 'description' ) ?: get_bloginfo( 'name' ) ); ?></strong>

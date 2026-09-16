@@ -1,6 +1,29 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.4.8] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 프론트 페이지(`front-page.php`)에서 상단 슬로건(`area-slogun`: "Traces | 기억이 머문 자리 / Somewhere between memory and record") 및 홈 히어로 배너(`home-hero`) 문구 제거
+
+### 주요 결정 사항
+- 데스크 일러스트 칠판에 이미 "Somewhere between memory and record"가 픽셀 아트로 포함되어 있어 상단 텍스트 중복 및 시선 분산을 해소하기 위해 슬로건과 배너를 프론트 페이지에서 출력 제외
+- `header.php`에서 `is_front_page()`일 때 `.area-slogun` 및 `.home-hero` 배너가 렌더링되지 않도록 조건 분기 처리
+- `style.css`에서 `body:has(.frontpage-hero)` 셀렉터로 슬로건 및 배너 숨김 처리 및 헤더 하단 여백 슬림화
+- `functions.php` 및 `style.css` 버전을 `1.4.8`로 일치시켜 브라우저 캐시 버스팅 적용
+
+### 수정한 파일
+- header.php
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l` 문법 검사 통과 및 프론트 페이지 헤더 간결화 검증
+
 ## [1.4.7] - 2026-09-16
 
 ### 변경 날짜
