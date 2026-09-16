@@ -91,6 +91,9 @@ $desk_image_url = get_stylesheet_directory_uri() . '/images/frontpage.webp';
 						<feGaussianBlur stdDeviation="6" result="blur" />
 						<feComposite in="SourceGraphic" in2="blur" operator="over" />
 					</filter>
+					<filter id="steam-soft-blur" x="-40%" y="-40%" width="180%" height="180%">
+						<feGaussianBlur stdDeviation="3.5" result="blur" />
+					</filter>
 				</defs>
 
 				<!-- 1. 왼쪽 모니터: 라이프로그 (Lifelog) -->
@@ -131,6 +134,16 @@ $desk_image_url = get_stylesheet_directory_uri() . '/images/frontpage.webp';
 						points="1014,192 1376,266 1360,545 1014,442"
 					/>
 				</a>
+
+				<!-- 4. 커피 잔 따뜻한 김(Steam) 애니메이션 -->
+				<g class="coffee-steam-wrap" aria-hidden="true">
+					<!-- 커피 표면 은은한 온기 베이스 -->
+					<ellipse class="steam-glow-base" cx="521" cy="507" rx="16" ry="6" />
+					<!-- 피어오르는 김 줄기들 -->
+					<path class="steam-path steam-path-1" d="M 521,504 C 515,475 528,446 519,416 C 511,386 525,356 517,318" />
+					<path class="steam-path steam-path-2" d="M 512,506 C 504,478 518,449 507,419 C 497,389 513,359 503,326" />
+					<path class="steam-path steam-path-3" d="M 530,505 C 538,477 523,447 535,417 C 545,387 531,357 539,322" />
+				</g>
 			</svg>
 		</div>
 

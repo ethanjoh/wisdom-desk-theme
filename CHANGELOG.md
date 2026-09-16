@@ -1,6 +1,32 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.5.0] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 메인 화면(`front-page.php`) 데스크 일러스트 속 커피 잔에 모락모락 피어오르는 커피 김(스팀) 애니메이션 추가
+
+### 주요 결정 사항
+- `front-page.php`: 기존 반응형 SVG 오버레이(`viewBox="0 0 1536 1024"`) 내부에 커피 스팀 전용 그룹(`<g class="coffee-steam-wrap">`) 및 부드러운 스팀 블러 필터(`feGaussianBlur stdDeviation="3.5"`) 추가
+- 머그컵 입구 위치(중심 X: 521, Y: 507)에 맞추어 따뜻한 온기 베이스 타원(`.steam-glow-base`)과 3가닥의 곡선 스팀 줄기(`.steam-path-1`, `.steam-path-2`, `.steam-path-3`) 배치
+- `style.css`: 순수 CSS GPU 가속 기반 `@keyframes coffeeSteamRise` 및 `@keyframes coffeeBaseGlow` 애니메이션 정의
+- 각 스팀 줄기에 서로 다른 주기(3.8s, 4.5s, 4.9s)와 딜레이(0s, 1.4s, 2.6s)를 적용하여 기계적이지 않고 자연스럽고 은은한 연기 연출
+- 모던 브라우저 및 반응형 환경에서 SVG 좌표계 기준으로 정확히 동작하도록 `transform-box: view-box` 및 `pointer-events: none` 설정
+- 테마 버전을 `1.5.0`으로 상향하여 브라우저 캐시 버스팅 적용
+
+### 수정한 파일
+- front-page.php
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l front-page.php` 및 `php -l functions.php` 문법 검사 통과
+- 반응형 SVG viewBox 기반으로 해상도 및 창 크기 변경 시 머그컵 위치에 정확히 고정되어 부드럽게 작동 확인
+
 ## [1.4.9] - 2026-09-16
 
 ### 변경 날짜
