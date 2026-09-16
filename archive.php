@@ -22,34 +22,10 @@ $description = is_category() ? category_description() : '';
 	</div>
 
 	<?php if ( have_posts() ) : ?>
-		<?php $archive_index = 0; ?>
-		<?php while ( have_posts() ) : the_post(); ?>
-			<?php if ( 0 === $archive_index ) : ?>
-				<article <?php post_class( 'archive-featured' ); ?>>
-					<a class="archive-featured-thumb" href="<?php the_permalink(); ?>" aria-label="<?php the_title_attribute(); ?>">
-						<img src="<?php echo esc_url( tistory_style_get_thumbnail_url( 'tistory-style-cover' ) ); ?>" alt="<?php the_title_attribute(); ?>" />
-					</a>
-					<div class="archive-featured-content">
-						<a href="<?php the_permalink(); ?>" class="archive-post-link">
-							<h2><?php the_title(); ?></h2>
-							<p><?php echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 55, '…' ) ); ?></p>
-						</a>
-						<div class="archive-meta">
-							<?php $cat = get_the_category(); ?>
-							<?php if ( ! empty( $cat ) ) : ?>
-								<a href="<?php echo esc_url( get_category_link( $cat[0]->term_id ) ); ?>"><?php echo esc_html( $cat[0]->name ); ?></a>
-							<?php endif; ?>
-							<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date( 'Y.m.d' ) ); ?></time>
-						</div>
-					</div>
-				</article>
-
-				<div class="archive-card-grid">
-			<?php else : ?>
+		<div class="archive-card-grid">
+			<?php while ( have_posts() ) : the_post(); ?>
 				<?php tistory_style_render_card(); ?>
-			<?php endif; ?>
-			<?php $archive_index++; ?>
-		<?php endwhile; ?>
+			<?php endwhile; ?>
 		</div>
 
 		<div class="area-paging archive-paging">

@@ -1,6 +1,63 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.5.7] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 서브카테고리(아카이브) 목록의 1번째 글을 별도의 대형 피처드 영역 대신 2번째 이후 글들과 동일한 모던 카드 섹션 형태로 통일
+
+### 주요 결정 사항
+- `archive.php`:
+  - 0번째 글에만 `archive-featured` 레이아웃을 강제하던 분기 로직을 제거
+  - 1번째 글부터 모든 글이 `.archive-card-grid` 컨테이너 내에서 `tistory_style_render_card()`를 통해 일관된 카드 섹션으로 렌더링되도록 수정
+  - PC/태블릿(3열/2열 그리드) 및 모바일(좌측 썸네일 + 우측 텍스트 가로 카드, 12px 둥근 모서리, 그림자 효과) 전체 환경에서 동일한 카드 디자인 통일성 확보
+- `style.css`: 테마 헤더 버전을 `1.5.7`로 상향
+- `functions.php`: `TISTORY_STYLE_VERSION` 상수를 `1.5.7`로 상향하여 브라우저 캐시 버스팅 적용
+- `CHANGELOG.md`: 버전 1.5.7 변경 사항 기록
+
+### 수정한 파일
+- archive.php
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l archive.php` 및 `php -l functions.php` 문법 검사 통과
+- 첫 번째 글부터 카드 그리드로 일관되게 출력되는 루프 구조 검증 완료
+
+## [1.5.6] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 모바일 환경에서 서브카테고리(아카이브) 목록의 2번째 글부터 노출되는 카드 섹션 배치 오류 수정 (썸네일 좌측, 텍스트 우측 가로 정렬, 모서리 라운드 및 그림자 효과 추가)
+
+### 주요 결정 사항
+- `style.css`:
+  - 데스크톱 `.archive-card-grid .article-type-common`에 모던 카드 스타일(모서리 `10px` 라운드, 은은한 그림자 `box-shadow: 0 2px 8px rgba(0,0,0,0.04)`, 호버 애니메이션) 적용
+  - 모바일 반응형(`@media screen and (max-width: 767px)`):
+    - `.archive-card-grid`: 1열 그리드 및 카드 간 간격(`gap: 14px`) 최적화
+    - `.archive-card-grid .article-type-common`: 가로형(`flex-direction: row`) 배치 전환, 둥근 모서리(`border-radius: 12px`), 전체 그림자 효과(`box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.03)`) 및 테두리 정돈
+    - 좌측 썸네일: `flex: 0 0 115px`, `min-height: 100%`, `padding-top: 0`, `background-size: cover`로 카드 높이에 맞춘 좌측 밀착 배치 및 비율 유지
+    - 우측 텍스트(`article-content`): 패딩(`13px 14px`), 제목 및 요약문 2줄 말줄임 처리, 카테고리와 발행일 메타 정보 하단 정렬
+  - 테마 헤더 버전을 `1.5.6`으로 상향
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.5.6`으로 상향하여 브라우저 CSS 캐시 갱신 반영
+- `CHANGELOG.md`: 버전 1.5.6 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 및 `php -l archive.php` 문법 검사 통과
+- CSS 구문 및 반응형 미디어 쿼리 specificity 우선순위 충돌 해소 확인
+
 ## [1.5.5] - 2026-09-16
 
 ### 변경 날짜
