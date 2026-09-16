@@ -1,6 +1,38 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.5.5] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 프론트페이지 데스크 일러스트의 시간 기반 자동 변경 기능 삭제 및 우측 상단 수동 주야간 모드 토글 버튼 및 설정 저장 구현
+
+### 주요 결정 사항
+- `front-page.php`:
+  - 서버 시각(`current_time( 'G' )`) 및 브라우저 로컬 시각(`new Date().getHours()`)에 의존하던 자동 일러스트 변경 로직 완전 삭제
+  - 데스크 일러스트 우측 상단에 글래스모피즘 기반 주야간 토글 버튼(`button#desk-theme-toggle`) 추가 및 해/달 인라인 SVG 아이콘 탑재
+  - 클릭 시 주간(`frontpage2.webp`)과 야간(`frontpage.webp`) 이미지를 즉시 전환하고, `localStorage`(`wisdom_desk_theme_mode`)에 사용자 선택값을 영구 저장하여 새로고침/재방문 시에도 유지되도록 처리
+- `style.css`:
+  - `.desk-theme-toggle` 및 해/달 아이콘 스타일링: 반투명 글래스모피즘 배경(`backdrop-filter`), 부드러운 호버/스케일 애니메이션 및 야간 골드 컬러 전환 적용
+  - `@media screen and (max-width: 640px)` 모바일 최적화 크기 및 여백 적용
+  - 테마 헤더 버전을 `1.5.5`로 상향
+- `functions.php`: `TISTORY_STYLE_VERSION`을 `1.5.5`로 상향하여 브라우저 CSS/JS 캐시 버스팅 적용
+- `README.md`: 주요 기능 목록에 주간/야간 일러스트 수동 토글(v1.5.5) 설명 추가
+
+### 수정한 파일
+- front-page.php
+- style.css
+- functions.php
+- README.md
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l front-page.php` 및 `php -l functions.php` 문법 검사 통과
+- 시간 기반 자동 전환 코드 완전 제거 확인
+- 수동 토글 버튼 클릭 시 주야간 이미지 전환, SVG 아이콘 상태 변경 및 `localStorage` 저장/복원 로직 검증 완료
+
 ## [1.5.4] - 2026-09-16
 
 ### 변경 날짜

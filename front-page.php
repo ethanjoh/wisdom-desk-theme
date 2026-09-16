@@ -89,13 +89,11 @@ $cat_lifelog = wisdom_desk_find_category( array( 'lifelog', 'life-log', 'life', 
 $cat_travel  = wisdom_desk_find_category( array( 'travel', 'trip', '여행' ), 'travel', '여행' );
 $cat_book    = wisdom_desk_find_category( array( 'book-review', 'book', 'books', '독서', '북리뷰' ), 'book-review', '북리뷰' );
 
-// 시간대별 배경 이미지 설정 (오전 7시 ~ 오후 6시: frontpage2.webp, 나머지 시간: frontpage.webp)
+// 데스크 일러스트 이미지 경로 (기본 주간: frontpage2.webp, 야간: frontpage.webp)
 $theme_uri        = get_stylesheet_directory_uri();
-$current_hour     = (int) current_time( 'G' );
-$is_daytime       = ( $current_hour >= 7 && $current_hour < 18 );
 $desk_image_day   = $theme_uri . '/images/frontpage2.webp';
 $desk_image_night = $theme_uri . '/images/frontpage.webp';
-$desk_image_url   = $is_daytime ? $desk_image_day : $desk_image_night;
+$desk_image_url   = $desk_image_day;
 ?>
 
 <!-- =======================================================================
@@ -104,7 +102,7 @@ $desk_image_url   = $is_daytime ? $desk_image_day : $desk_image_night;
 <section class="frontpage-hero" aria-label="메인 데스크 카테고리 내비게이션">
 	<div class="frontpage-hero-container">
 		<div class="desk-interactive-wrapper">
-			<!-- 메인 배경 일러스트 (시간대별 주간/야간 전환 및 캐시 대응 보정) -->
+			<!-- 메인 배경 일러스트 (주간/야간 수동 전환 지원) -->
 			<img
 				id="desk-main-hero-img"
 				src="<?php echo esc_url( $desk_image_url ); ?>"
@@ -116,15 +114,79 @@ $desk_image_url   = $is_daytime ? $desk_image_day : $desk_image_night;
 				height="1024"
 				loading="eager"
 			/>
+
+			<!-- 주간/야간 모드 수동 토글 버튼 (우측 상단) -->
+			<button
+				type="button"
+				id="desk-theme-toggle"
+				class="desk-theme-toggle"
+				aria-label="주간/야간 일러스트 모드 전환"
+				title="주간/야간 일러스트 모드 전환"
+			>
+				<!-- 달 아이콘 (주간일 때 표시되어 클릭 시 야간으로 전환) -->
+				<svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+				</svg>
+				<!-- 해 아이콘 (야간일 때 표시되어 클릭 시 주간으로 전환) -->
+				<svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<circle cx="12" cy="12" r="5"></circle>
+					<line x1="12" y1="1" x2="12" y2="3"></line>
+					<line x1="12" y1="21" x2="12" y2="23"></line>
+					<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+					<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+					<line x1="1" y1="12" x2="3" y2="12"></line>
+					<line x1="21" y1="12" x2="23" y2="12"></line>
+					<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+					<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+				</svg>
+			</button>
+
 			<script>
 			(function() {
+				var STORAGE_KEY = 'wisdom_desk_theme_mode';
 				var heroImg = document.getElementById('desk-main-hero-img');
-				if (!heroImg) return;
-				var h = new Date().getHours();
-				var targetSrc = (h >= 7 && h < 18) ? heroImg.getAttribute('data-day-src') : heroImg.getAttribute('data-night-src');
-				if (targetSrc && heroImg.src !== targetSrc) {
-					heroImg.src = targetSrc;
+				var toggleBtn = document.getElementById('desk-theme-toggle');
+				if (!heroImg || !toggleBtn) return;
+
+				var daySrc = heroImg.getAttribute('data-day-src');
+				var nightSrc = heroImg.getAttribute('data-night-src');
+
+				function applyMode(mode, save) {
+					if (mode === 'night') {
+						if (nightSrc && heroImg.src !== nightSrc) heroImg.src = nightSrc;
+						toggleBtn.setAttribute('data-mode', 'night');
+						toggleBtn.setAttribute('aria-label', '주간 모드로 전환');
+						toggleBtn.setAttribute('title', '주간 모드로 전환');
+					} else {
+						if (daySrc && heroImg.src !== daySrc) heroImg.src = daySrc;
+						toggleBtn.setAttribute('data-mode', 'day');
+						toggleBtn.setAttribute('aria-label', '야간 모드로 전환');
+						toggleBtn.setAttribute('title', '야간 모드로 전환');
+					}
+					if (save) {
+						try {
+							localStorage.setItem(STORAGE_KEY, mode);
+						} catch (e) {}
+					}
 				}
+
+				// 저장된 설정 불러오기 (기본값: day)
+				var savedMode = 'day';
+				try {
+					var stored = localStorage.getItem(STORAGE_KEY);
+					if (stored === 'day' || stored === 'night') {
+						savedMode = stored;
+					}
+				} catch (e) {}
+				applyMode(savedMode, false);
+
+				// 버튼 클릭 시 토글
+				toggleBtn.addEventListener('click', function(e) {
+					e.preventDefault();
+					var currentMode = toggleBtn.getAttribute('data-mode') || 'day';
+					var nextMode = (currentMode === 'day') ? 'night' : 'day';
+					applyMode(nextMode, true);
+				});
 			})();
 			</script>
 
