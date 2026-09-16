@@ -1,6 +1,33 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.5.3] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 메인 화면(`index.php`) 카테고리별 글 조회 쿼리 최적화 및 썸네일 URL 취득 방식 개선
+
+### 주요 결정 사항
+- `index.php`:
+  - 메인 최신 글 쿼리(`$home_query`)의 페이지당 글 수를 7개에서 5개로 조정하고 `no_found_rows => true` 적용으로 불필요한 전체 카운트 쿼리 방지
+  - 카테고리별 섹션에서 카테고리마다 반복 실행되던 개별 `WP_Query`를 단일 풀 쿼리(`category__in`)로 통합하여 DB 부하 대폭 감소
+- `functions.php`:
+  - `tistory_style_get_thumbnail_url()` 함수에서 `wp_get_attachment_image_src( get_post_thumbnail_id(), ... )` 대신 코어 헬퍼 `get_the_post_thumbnail_url()`을 사용하여 썸네일 URL 취득 로직 간소화
+  - 테마 버전을 `1.5.3`으로 상향
+- `style.css`: 테마 헤더 버전을 `1.5.3`으로 상향
+
+### 수정한 파일
+- index.php
+- functions.php
+- style.css
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l index.php` 및 `php -l functions.php` 문법 검사 통과
+- 단일 쿼리 기반 카테고리별 최신 글 분배 로직 및 썸네일 URL 렌더링 정상 확인
+
 ## [1.5.2] - 2026-09-16
 
 ### 변경 날짜

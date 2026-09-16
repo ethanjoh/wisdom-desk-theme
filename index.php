@@ -15,7 +15,8 @@ $home_query = new WP_Query(
 	array(
 		'post_type'           => 'post',
 		'post_status'         => 'publish',
-		'posts_per_page'      => 7,
+		'posts_per_page'      => 5,
+		'no_found_rows'       => true,
 		'ignore_sticky_posts' => true,
 		'orderby'             => 'date',
 		'order'               => 'DESC',
@@ -113,24 +114,36 @@ $home_categories = get_categories(
 ?>
 
 <?php if ( ! empty( $home_categories ) ) : ?>
+	<?php
+	// Fetch the newest posts for all top-level categories in one query instead
+	// of running one WP_Query per category. This matters on shared hosting.
+	$home_category_ids = wp_list_pluck( $home_categories, 'term_id' );
+	$category_pool = new WP_Query(
+		array(
+			'post_type'           => 'post',
+			'post_status'         => 'publish',
+			'category__in'        => $home_category_ids,
+			'posts_per_page'      => max( 1, count( $home_category_ids ) * 3 ),
+			'ignore_sticky_posts' => true,
+			'orderby'             => 'date',
+			'order'               => 'DESC',
+			'no_found_rows'       => true,
+		)
+	);
+	$category_posts = array_fill_keys( $home_category_ids, array() );
+	foreach ( $category_pool->posts as $category_post ) {
+		$post_categories = wp_get_post_categories( $category_post->ID );
+		foreach ( $post_categories as $post_category_id ) {
+			if ( isset( $category_posts[ $post_category_id ] ) && count( $category_posts[ $post_category_id ] ) < 3 ) {
+				$category_posts[ $post_category_id ][] = $category_post;
+			}
+		}
+	}
+	?>
 	<section class="home-category-sections" aria-label="카테고리별 최신 글">
 		<?php foreach ( $home_categories as $home_category ) : ?>
-			<?php
-			$category_query = new WP_Query(
-				array(
-					'post_type'           => 'post',
-					'post_status'         => 'publish',
-					'cat'                 => $home_category->term_id,
-					'posts_per_page'      => 3,
-					'ignore_sticky_posts' => true,
-					'orderby'             => 'date',
-					'order'               => 'DESC',
-					'no_found_rows'       => true,
-				)
-			);
-			?>
-
-			<?php if ( $category_query->have_posts() ) : ?>
+			<?php $category_posts_for_section = $category_posts[ $home_category->term_id ] ?? array(); ?>
+			<?php if ( ! empty( $category_posts_for_section ) ) : ?>
 				<section class="home-category-section">
 					<div class="home-category-heading">
 						<h2><?php echo esc_html( $home_category->name ); ?></h2>
@@ -138,30 +151,25 @@ $home_categories = get_categories(
 					</div>
 
 					<div class="home-category-grid">
-						<?php while ( $category_query->have_posts() ) : $category_query->the_post(); ?>
+						<?php foreach ( $category_posts_for_section as $post ) : setup_postdata( $post ); ?>
 							<article class="home-category-card">
 								<a class="home-category-card-thumb" href="<?php the_permalink(); ?>" aria-label="<?php the_title_attribute(); ?>">
 									<img src="<?php echo esc_url( tistory_style_get_thumbnail_url( 'tistory-style-cover' ) ); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy" />
 								</a>
 								<div class="home-category-card-content">
-									<a href="<?php the_permalink(); ?>" class="home-post-link">
-										<h3><?php the_title(); ?></h3>
-									</a>
+									<a href="<?php the_permalink(); ?>" class="home-post-link"><h3><?php the_title(); ?></h3></a>
 									<p><?php echo esc_html( wp_trim_words( wp_strip_all_tags( get_the_excerpt() ), 20, '…' ) ); ?></p>
 									<time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date( 'Y.m.d' ) ); ?></time>
 								</div>
 							</article>
-						<?php endwhile; ?>
+						<?php endforeach; wp_reset_postdata(); ?>
 					</div>
 				</section>
 			<?php endif; ?>
-
-			<?php wp_reset_postdata(); ?>
 		<?php endforeach; ?>
 	</section>
 <?php endif; ?>
 
 <?php
 wp_reset_postdata();
-wp_reset_query();
 get_footer();

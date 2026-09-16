@@ -6,7 +6,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'TISTORY_STYLE_VERSION', '1.5.2' );
+define( 'TISTORY_STYLE_VERSION', '1.5.3' );
 
 /* -------------------------------------------------------------------------
  * Theme setup
@@ -185,9 +185,9 @@ function tistory_style_render_card() {
  */
 function tistory_style_get_thumbnail_url( $size = 'tistory-style-cover' ) {
 	if ( has_post_thumbnail() ) {
-		$src = wp_get_attachment_image_src( get_post_thumbnail_id(), $size );
-		if ( $src ) {
-			return $src[0];
+		$url = get_the_post_thumbnail_url( null, $size );
+		if ( $url ) {
+			return $url;
 		}
 	}
 	return get_template_directory_uri() . '/images/no-image.svg';
