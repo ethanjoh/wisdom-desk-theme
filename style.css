@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.5.0
+Version: 1.5.1
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -8949,6 +8949,7 @@ body:has(.home-layout) .area-main {
     opacity: 0.25;
     transform: scale(0.9);
   }
+
   100% {
     opacity: 0.65;
     transform: scale(1.18);
@@ -8992,16 +8993,20 @@ body:has(.home-layout) .area-main {
     opacity: 0;
     transform: translateY(0) scaleY(0.5) scaleX(0.7);
   }
+
   20% {
     opacity: 0.75;
   }
+
   50% {
     opacity: 0.5;
     transform: translateY(-28px) scaleY(0.9) scaleX(1.15) skewX(2deg);
   }
+
   80% {
     opacity: 0.22;
   }
+
   100% {
     opacity: 0;
     transform: translateY(-62px) scaleY(1.3) scaleX(1.45) skewX(-2.5deg);
