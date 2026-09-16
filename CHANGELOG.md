@@ -1,6 +1,32 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.5.9] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 모바일 메뉴(사이드바 서랍) 열람 시 하단에 노출되던 검색창(`get_search_form()` 및 검색 위젯/블록) 숨김 처리
+
+### 주요 결정 사항
+- `style.css`:
+  - 모바일 반응형(`@media screen and (max-width: 1060px)`) 서랍(`.area-aside`) 내 불필요한 위젯 숨김 목록에 검색창 관련 선택자(`.util.use-sidebar`, `form[role="search"]`, `.searchform`, `.widget_search`, `.wp-block-search`, `.box-sidebar:has(.wp-block-search)` 등) 추가
+  - 모바일 서랍 내에서 불필요하게 공간을 차지하던 검색 인풋 필드 및 검색 버튼 완전 숨김 처리
+  - 테마 헤더 버전을 `1.5.9`로 상향
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.5.9`로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.5.9 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- 모바일 서랍 내 검색창 선택자 적용 및 스타일 유효성 검증 완료
+
 ## [1.5.8] - 2026-09-16
 
 ### 변경 날짜

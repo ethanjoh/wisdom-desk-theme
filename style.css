@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.5.8
+Version: 1.5.9
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -5386,9 +5386,17 @@ hr[data-ke-style='style8'],
     height: 22px !important;
   }
 
-  /* 서랍 내부 불필요한 위젯 숨김 (최근댓글, 최근글/인기글, 하단 중복 카테고리 위젯/블록) */
+  /* 서랍 내부 불필요한 위젯 숨김 (최근댓글, 최근글/인기글, 하단 중복 카테고리 위젯/블록, 검색창) */
   .area-aside .box-reply,
   .area-aside .box-recent,
+  .area-aside .util.use-sidebar,
+  .area-aside form[role="search"],
+  .area-aside .searchform,
+  .area-aside .widget_search,
+  .area-aside .wp-block-search,
+  .area-aside .box-sidebar:has(.wp-block-search),
+  .area-aside .box-sidebar:has(.widget_search),
+  .area-aside .widget_block:has(.wp-block-search),
   .area-aside .widget_categories,
   .area-aside .wp-block-categories,
   .area-aside .wp-block-categories-list,
