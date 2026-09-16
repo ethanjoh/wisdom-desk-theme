@@ -6,7 +6,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'TISTORY_STYLE_VERSION', '1.5.0' );
+define( 'TISTORY_STYLE_VERSION', '1.5.1' );
 
 /* -------------------------------------------------------------------------
  * Theme setup

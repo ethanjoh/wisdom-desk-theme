@@ -9054,21 +9054,17 @@ body:has(.home-layout) .area-main {
   height: 8px;
   border-radius: 50%;
   margin-bottom: 8px;
+  visibility: hidden;
+  opacity: 0;
+  background-color: transparent;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.desk-quick-lifelog .desk-quick-indicator {
-  background-color: #0284c7;
-  box-shadow: 0 0 6px rgba(2, 132, 199, 0.6);
-}
-
-.desk-quick-travel .desk-quick-indicator {
-  background-color: #2563eb;
-  box-shadow: 0 0 6px rgba(37, 99, 235, 0.6);
-}
-
-.desk-quick-book .desk-quick-indicator {
-  background-color: #d97706;
-  box-shadow: 0 0 6px rgba(217, 119, 6, 0.6);
+.desk-quick-indicator.is-new {
+  visibility: visible;
+  opacity: 1;
+  background-color: #ef4444;
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.7);
 }
 
 .desk-quick-title {

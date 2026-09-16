@@ -1,6 +1,36 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.5.1] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 프론트페이지 하단 카테고리 퀵 버튼의 인디케이터 점을 해당 카테고리에 신규 글이 있을 때만 빨간색으로 표시되도록 개선
+
+### 주요 결정 사항
+- `front-page.php`:
+  - 특정 카테고리에 지정된 일수(기본 7일) 이내 발행된 신규 글이 있는지 확인하는 헬퍼 함수 `wisdom_desk_category_has_new_post()` 추가
+  - `apply_filters( 'wisdom_desk_new_post_days', $days, $cat_id )` 지원으로 신규 글 판단 기간 유연화
+  - 카테고리 조회 헬퍼 `wisdom_desk_find_category()` 결과에 `has_new` 플래그 추가
+  - 퀵 내비게이션 점 태그에 신규 글 존재 시 `is-new` 클래스 및 웹 접근성용 `title="새 글"` 속성 부여
+- `style.css`:
+  - 기존 카테고리별 상시 고정 색상(파란색, 주황색) 제거
+  - 신규 글이 없을 때는 `visibility: hidden; opacity: 0;`로 점을 숨기되, 카드의 텍스트 정렬 및 여백 유지를 위해 크기(8px)와 마진 유지
+  - 신규 글이 있을 때(`is-new`)만 선명한 빨간색 점(`background-color: #ef4444;`, `box-shadow: 0 0 6px rgba(239, 68, 68, 0.7);`) 표시
+- `functions.php`: 테마 버전을 `1.5.1`로 상향하여 브라우저 CSS 캐시 버스팅 적용
+
+### 수정한 파일
+- front-page.php
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l front-page.php` 및 `php -l functions.php` 문법 검사 통과
+- 신규 글 유무에 따른 `is-new` 클래스 동적 부여 및 CSS 렌더링 동작 확인
+
 ## [1.5.0] - 2026-09-16
 
 ### 변경 날짜

@@ -13,6 +13,31 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 get_header();
 
 /**
+ * 특정 카테고리에 지정된 일수(기본 7일) 이내에 발행된 신규 글이 있는지 확인하는 헬퍼 함수
+ */
+if ( ! function_exists( 'wisdom_desk_category_has_new_post' ) ) {
+	function wisdom_desk_category_has_new_post( $cat_id, $days = 7 ) {
+		if ( ! $cat_id ) {
+			return false;
+		}
+		$days = apply_filters( 'wisdom_desk_new_post_days', $days, $cat_id );
+		$recent_posts = get_posts( array(
+			'cat'            => (int) $cat_id,
+			'posts_per_page' => 1,
+			'post_status'    => 'publish',
+			'date_query'     => array(
+				array(
+					'after' => $days . ' days ago',
+				),
+			),
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
+		) );
+		return ! empty( $recent_posts );
+	}
+}
+
+/**
  * 카테고리 슬러그 또는 이름을 기준으로 카테고리 링크 및 정보를 찾는 헬퍼 함수
  */
 if ( ! function_exists( 'wisdom_desk_find_category' ) ) {
@@ -22,10 +47,12 @@ if ( ! function_exists( 'wisdom_desk_find_category' ) ) {
 			$cat = get_category_by_slug( $candidate );
 			if ( $cat && ! is_wp_error( $cat ) ) {
 				return array(
-					'url'   => get_category_link( $cat->term_id ),
-					'name'  => $cat->name,
-					'count' => $cat->count,
-					'found' => true,
+					'term_id' => $cat->term_id,
+					'url'     => get_category_link( $cat->term_id ),
+					'name'    => $cat->name,
+					'count'   => $cat->count,
+					'has_new' => wisdom_desk_category_has_new_post( $cat->term_id ),
+					'found'   => true,
 				);
 			}
 			// 2. 카테고리 이름으로 찾기
@@ -34,10 +61,12 @@ if ( ! function_exists( 'wisdom_desk_find_category' ) ) {
 				$cat = get_category( $cat_id );
 				if ( $cat && ! is_wp_error( $cat ) ) {
 					return array(
-						'url'   => get_category_link( $cat->term_id ),
-						'name'  => $cat->name,
-						'count' => $cat->count,
-						'found' => true,
+						'term_id' => $cat->term_id,
+						'url'     => get_category_link( $cat->term_id ),
+						'name'    => $cat->name,
+						'count'   => $cat->count,
+						'has_new' => wisdom_desk_category_has_new_post( $cat->term_id ),
+						'found'   => true,
 					);
 				}
 			}
@@ -45,10 +74,12 @@ if ( ! function_exists( 'wisdom_desk_find_category' ) ) {
 
 		// 일치하는 카테고리가 없는 경우 fallback URL 생성
 		return array(
-			'url'   => home_url( '/category/' . $default_slug . '/' ),
-			'name'  => $default_name,
-			'count' => 0,
-			'found' => false,
+			'term_id' => 0,
+			'url'     => home_url( '/category/' . $default_slug . '/' ),
+			'name'    => $default_name,
+			'count'   => 0,
+			'has_new' => false,
+			'found'   => false,
 		);
 	}
 }
@@ -150,17 +181,17 @@ $desk_image_url = get_stylesheet_directory_uri() . '/images/frontpage.webp';
 		<!-- 모바일 및 접근성 보조 카테고리 내비게이션 바 -->
 		<nav class="desk-quick-nav" aria-label="주요 카테고리 바로가기">
 			<a href="<?php echo esc_url( $cat_lifelog['url'] ); ?>" class="desk-quick-btn desk-quick-lifelog">
-				<span class="desk-quick-indicator"></span>
+				<span class="desk-quick-indicator<?php echo ! empty( $cat_lifelog['has_new'] ) ? ' is-new' : ''; ?>"<?php echo ! empty( $cat_lifelog['has_new'] ) ? ' title="새 글"' : ''; ?>></span>
 				<span class="desk-quick-title">라이프로그</span>
 				<span class="desk-quick-sub">Lifelog</span>
 			</a>
 			<a href="<?php echo esc_url( $cat_travel['url'] ); ?>" class="desk-quick-btn desk-quick-travel">
-				<span class="desk-quick-indicator"></span>
+				<span class="desk-quick-indicator<?php echo ! empty( $cat_travel['has_new'] ) ? ' is-new' : ''; ?>"<?php echo ! empty( $cat_travel['has_new'] ) ? ' title="새 글"' : ''; ?>></span>
 				<span class="desk-quick-title">여행</span>
 				<span class="desk-quick-sub">Travel</span>
 			</a>
 			<a href="<?php echo esc_url( $cat_book['url'] ); ?>" class="desk-quick-btn desk-quick-book">
-				<span class="desk-quick-indicator"></span>
+				<span class="desk-quick-indicator<?php echo ! empty( $cat_book['has_new'] ) ? ' is-new' : ''; ?>"<?php echo ! empty( $cat_book['has_new'] ) ? ' title="새 글"' : ''; ?>></span>
 				<span class="desk-quick-title">북리뷰</span>
 				<span class="desk-quick-sub">Book Review</span>
 			</a>
