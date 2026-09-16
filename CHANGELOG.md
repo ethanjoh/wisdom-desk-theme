@@ -1,6 +1,29 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.4.9] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 모바일 서랍 메뉴 타이틀 영역 배경에 메인 배너 썸네일 적용 및 카테고리 글 수 괄호 `( )` 표기
+
+### 주요 결정 사항
+- `style.css`: 모바일 서랍 메뉴(`.area-aside .box-profile`)의 기본 회색 테두리 사각 박스를 제거하고 메인 배너(`images/main-banner.jpg`)를 배경으로 적용 (`center / cover no-repeat`, 어두운 오버레이 레이어, 라운드 코너 12px, 은은한 텍스트 그림자 및 흰색 텍스트)
+- `style.css`: 사이드바 카테고리 글 수(`.area-aside .box-category .c_cnt`) 전용 폰트 스타일(크기 13px, 색상 #888, 굵기 normal, 왼쪽 여백 4px)을 추가하여 카테고리 타이틀과 조화롭게 구분
+- `functions.php`: `tistory_style_category_sidebar()` 함수에서 대분류 및 소분류 카테고리 글 수를 `<span class="c_cnt">(%d)</span>` 형태로 괄호 표기 확정
+- 테마 버전을 `1.4.9`로 상향하여 브라우저 CSS/JS 캐시 버스팅 적용
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- `style.css` 모바일 미디어 쿼리 내 배너 배경 및 카테고리 글 수 괄호 스타일 반영 확인
+
 ## [1.4.8] - 2026-09-16
 
 ### 변경 날짜

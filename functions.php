@@ -6,7 +6,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'TISTORY_STYLE_VERSION', '1.4.8' );
+define( 'TISTORY_STYLE_VERSION', '1.4.9' );
 
 /* -------------------------------------------------------------------------
  * Theme setup
@@ -211,7 +211,7 @@ function tistory_style_category_sidebar() {
 		);
 		echo '<li>';
 		printf(
-			'<a href="%s" class="link_item">%s <span class="c_cnt">%d</span></a>',
+			'<a href="%s" class="link_item">%s <span class="c_cnt">(%d)</span></a>',
 			esc_url( get_category_link( $category ) ),
 			esc_html( $category->name ),
 			(int) $category->count
@@ -220,7 +220,7 @@ function tistory_style_category_sidebar() {
 			echo '<ul class="sub_category_list">';
 			foreach ( $children as $child ) {
 				printf(
-					'<li><a href="%s" class="link_sub_item">%s <span class="c_cnt">%d</span></a></li>',
+					'<li><a href="%s" class="link_sub_item">%s <span class="c_cnt">(%d)</span></a></li>',
 					esc_url( get_category_link( $child ) ),
 					esc_html( $child->name ),
 					(int) $child->count

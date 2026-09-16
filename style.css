@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.4.8
+Version: 1.4.9
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -1083,7 +1083,8 @@ html {
   text-decoration: none;
 }
 
-.area-aside .box-category .tt_category .c_cnt {
+.area-aside .box-category .tt_category .c_cnt,
+.area-aside .box-category .c_cnt {
   display: inline-block;
   font-size: 12px;
   vertical-align: 1px;
@@ -5337,6 +5338,51 @@ hr[data-ke-style='style8'],
     display: none !important;
   }
 
+  /* 모바일 서랍 타이틀 영역: 메인 배너 썸네일 배경 적용 */
+  .area-aside .box-profile {
+    position: relative !important;
+    margin-bottom: 24px !important;
+    padding: 24px 16px !important;
+    border-radius: 12px !important;
+    border: none !important;
+    background: linear-gradient(rgba(0, 0, 0, 0.48), rgba(0, 0, 0, 0.48)), url('./images/main-banner.jpg') center / cover no-repeat !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12) !important;
+    text-align: center !important;
+    overflow: hidden !important;
+  }
+
+  .area-aside .box-profile .inner-box {
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .area-aside .box-profile .tit-g {
+    display: block !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: #ffffff !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65) !important;
+    margin: 0 0 6px 0 !important;
+    padding: 0 !important;
+    line-height: 1.4 !important;
+    word-break: keep-all !important;
+  }
+
+  .area-aside .box-profile .text-profile {
+    font-size: 12.5px !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65) !important;
+    margin: 0 auto !important;
+    line-height: 1.45 !important;
+    max-width: 100% !important;
+    word-break: keep-all !important;
+  }
+
+  .area-aside .box-profile .custom-logo-link {
+    display: inline-block !important;
+    margin-bottom: 8px !important;
+  }
+
   .area-aside .box-category {
     display: block !important;
     width: 100% !important;
@@ -5374,6 +5420,29 @@ hr[data-ke-style='style8'],
     color: #666 !important;
     padding: 4px 0 !important;
     display: block !important;
+  }
+
+  /* 카테고리 글 수 괄호 표기 스타일 */
+  .area-aside .box-category .c_cnt {
+    display: inline-block !important;
+    font-size: 13px !important;
+    font-weight: 400 !important;
+    color: #888888 !important;
+    margin-left: 4px !important;
+    vertical-align: baseline !important;
+  }
+
+  .area-aside .box-category .category_list>li>a.link_item:hover .c_cnt {
+    color: #555555 !important;
+  }
+
+  .area-aside .box-category .sub_category_list li a.link_sub_item .c_cnt {
+    font-size: 12px !important;
+    color: #999999 !important;
+  }
+
+  .area-aside .box-category .sub_category_list li a.link_sub_item:hover .c_cnt {
+    color: #666666 !important;
   }
 
   /* ========================================================
