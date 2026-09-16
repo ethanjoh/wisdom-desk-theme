@@ -1,6 +1,38 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.5.4] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 글 내용보기 하단 관련글 섹션 3개 출력 보장, 고화질 썸네일 개선 및 모던 카드 섹션 UI 개편
+
+### 주요 결정 사항
+- `style.css`:
+  - 마지막 아이템을 강제 숨김 처리하던 `.article-related .item-related:last-child { display: none; }` 제거하여 관련글이 3개 모두 정상 출력되도록 수정
+  - 관련글 목록을 3열 CSS Grid(`grid-template-columns: repeat(3, 1fr); gap: 20px;`) 기반의 모던 카드 UI로 전면 개편
+  - 카드 배경(#fff), 테두리(#eaedf0), 둥근 모서리(12px), 은은한 그림자 및 호버 시 상승/확대 애니메이션 인터랙션 적용
+  - 760px 이하 모바일 화면에서 안정적인 1열 카드 반응형 레이아웃 구현
+  - 테마 헤더 버전을 `1.5.4`로 상향
+- `functions.php`:
+  - `tistory_style_related_posts()` 기본 출력 글 수를 3개(`$count = 3`)로 일치화하고 카드형 마크업 구조(`thumbnail-wrap`) 적용
+  - `add_image_size( 'tistory-style-related', 600, 380, true )`로 고해상도 규격 상향 등록
+  - `tistory_style_get_thumbnail_url()`에 `medium_large`, `post-thumbnail`, `large`, `full` 순차 폴백 체인을 추가하고, 관련글 썸네일로 `medium_large`(768px 폭)를 요청하여 기존 등록된 글에서도 흐릿함 없는 고화질 렌더링 지원
+  - 테마 버전을 `1.5.4`로 상향하여 브라우저 CSS 캐시 버스팅 적용
+- `CHANGELOG.md`: 버전 1.5.4 변경 이력 기록
+
+### 수정한 파일
+- functions.php
+- style.css
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- `.item-related:last-child { display: none; }` 제거로 3개 항목 정상 노출 확인
+- 3열 카드 그리드 디자인, 호버 인터랙션 및 반응형 스타일 정합성 확인
+
 ## [1.5.3] - 2026-09-16
 
 ### 변경 날짜

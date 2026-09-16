@@ -6,7 +6,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'TISTORY_STYLE_VERSION', '1.5.3' );
+define( 'TISTORY_STYLE_VERSION', '1.5.4' );
 
 /* -------------------------------------------------------------------------
  * Theme setup
@@ -32,7 +32,7 @@ function tistory_style_setup() {
 	// Matches the ".thumbnail" list cards and the wide ".article-header" cover image.
 	set_post_thumbnail_size( 700, 500, true );
 	add_image_size( 'tistory-style-cover', 1440, 500, true );
-	add_image_size( 'tistory-style-related', 200, 200, true );
+	add_image_size( 'tistory-style-related', 600, 380, true );
 
 	register_nav_menus(
 		array(
@@ -189,6 +189,13 @@ function tistory_style_get_thumbnail_url( $size = 'tistory-style-cover' ) {
 		if ( $url ) {
 			return $url;
 		}
+		$fallbacks = array( 'medium_large', 'post-thumbnail', 'large', 'full' );
+		foreach ( $fallbacks as $fallback ) {
+			$url = get_the_post_thumbnail_url( null, $fallback );
+			if ( $url ) {
+				return $url;
+			}
+		}
 	}
 	return get_template_directory_uri() . '/images/no-image.svg';
 }
@@ -236,7 +243,7 @@ function tistory_style_category_sidebar() {
 /**
  * Related posts (skin: article-related) — same-category posts, excluding current.
  */
-function tistory_style_related_posts( $count = 4 ) {
+function tistory_style_related_posts( $count = 3 ) {
 	$categories = get_the_category();
 	if ( empty( $categories ) ) {
 		return;
@@ -263,9 +270,11 @@ function tistory_style_related_posts( $count = 4 ) {
 			<?php while ( $query->have_posts() ) : $query->the_post(); ?>
 				<li class="item-related">
 					<a href="<?php the_permalink(); ?>" class="link-related">
-						<span class="thumnail" style="background-image:url('<?php echo esc_url( tistory_style_get_thumbnail_url( 'tistory-style-related' ) ); ?>')"></span>
+						<div class="thumbnail-wrap">
+							<span class="thumnail" style="background-image:url('<?php echo esc_url( tistory_style_get_thumbnail_url( 'medium_large' ) ); ?>')"></span>
+						</div>
 						<div class="box_content">
-							<strong><?php the_title(); ?></strong>
+							<strong class="title"><?php the_title(); ?></strong>
 							<span class="date"><?php echo esc_html( get_the_date( 'Y.m.d' ) ); ?></span>
 						</div>
 					</a>
