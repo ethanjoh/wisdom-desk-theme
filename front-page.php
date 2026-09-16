@@ -89,7 +89,13 @@ $cat_lifelog = wisdom_desk_find_category( array( 'lifelog', 'life-log', 'life', 
 $cat_travel  = wisdom_desk_find_category( array( 'travel', 'trip', '여행' ), 'travel', '여행' );
 $cat_book    = wisdom_desk_find_category( array( 'book-review', 'book', 'books', '독서', '북리뷰' ), 'book-review', '북리뷰' );
 
-$desk_image_url = get_stylesheet_directory_uri() . '/images/frontpage.webp';
+// 시간대별 배경 이미지 설정 (오전 7시 ~ 오후 6시: frontpage2.webp, 나머지 시간: frontpage.webp)
+$theme_uri        = get_stylesheet_directory_uri();
+$current_hour     = (int) current_time( 'G' );
+$is_daytime       = ( $current_hour >= 7 && $current_hour < 18 );
+$desk_image_day   = $theme_uri . '/images/frontpage2.webp';
+$desk_image_night = $theme_uri . '/images/frontpage.webp';
+$desk_image_url   = $is_daytime ? $desk_image_day : $desk_image_night;
 ?>
 
 <!-- =======================================================================
@@ -98,15 +104,29 @@ $desk_image_url = get_stylesheet_directory_uri() . '/images/frontpage.webp';
 <section class="frontpage-hero" aria-label="메인 데스크 카테고리 내비게이션">
 	<div class="frontpage-hero-container">
 		<div class="desk-interactive-wrapper">
-			<!-- 메인 배경 일러스트 -->
+			<!-- 메인 배경 일러스트 (시간대별 주간/야간 전환 및 캐시 대응 보정) -->
 			<img
+				id="desk-main-hero-img"
 				src="<?php echo esc_url( $desk_image_url ); ?>"
+				data-day-src="<?php echo esc_url( $desk_image_day ); ?>"
+				data-night-src="<?php echo esc_url( $desk_image_night ); ?>"
 				alt="Wisdom Desk - 모니터를 클릭하여 카테고리로 이동하세요"
 				class="desk-main-img"
 				width="1536"
 				height="1024"
 				loading="eager"
 			/>
+			<script>
+			(function() {
+				var heroImg = document.getElementById('desk-main-hero-img');
+				if (!heroImg) return;
+				var h = new Date().getHours();
+				var targetSrc = (h >= 7 && h < 18) ? heroImg.getAttribute('data-day-src') : heroImg.getAttribute('data-night-src');
+				if (targetSrc && heroImg.src !== targetSrc) {
+					heroImg.src = targetSrc;
+				}
+			})();
+			</script>
 
 			<!-- 반응형 인터랙티브 모니터 링크 SVG 오버레이 -->
 			<svg

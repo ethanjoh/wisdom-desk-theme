@@ -59,7 +59,8 @@
 | `index.php` / `archive.php` | 블로그 카드형 글 목록 및 카테고리/태그 아카이브 템플릿 |
 | `single.php` / `page.php` | 글 상세 페이지(슬림 배너, 카테고리 최신글 사이드바) 및 고정 페이지 |
 | `comments.php` | 반응형 댓글 목록 및 작성 폼 |
-| `images/frontpage.webp` | 프론트 페이지용 고해상도 데스크 일러스트 (1536×1024) |
+| `images/frontpage.webp` | 야간/기타 시간대용 프론트 데스크 일러스트 (1536×1024) |
+| `images/frontpage2.webp` | 주간(07:00~18:00) 시간대용 프론트 데스크 일러스트 (1536×1024) |
 | `images/main-banner.jpg` | 메인 헤더 및 모바일 서랍 프로필 배경용 배너 이미지 |
 | `inc/class-tistory-style-nav-walker.php` | 2-Depth 메가메뉴 마크업 전용 커스텀 내비게이션 워커 |
 | `js/theme.js` | 모바일 서랍 사이드바 토글 및 메가메뉴 높이 계산 스크립트 |

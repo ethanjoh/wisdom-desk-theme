@@ -1,6 +1,35 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.5.2] - 2026-09-16
+
+### 변경 날짜
+- 2026-09-16
+
+### 변경 목적
+- 시간대에 따라 메인 화면 데스크 일러스트를 동적으로 교체하여 주간(오전 7시 ~ 오후 6시)에는 `frontpage2.webp`, 야간 및 나머지 시간대에는 `frontpage.webp`가 표시되도록 구현
+
+### 주요 결정 사항
+- `front-page.php`:
+  - 워드프레스 타임존 기준 현재 시간(`(int) current_time( 'G' )`)을 확인하여 오전 7시부터 오후 6시 미만(`$hour >= 7 && $hour < 18`) 조건 분기 처리
+  - 조건에 따라 `frontpage2.webp`(주간) 또는 `frontpage.webp`(야간/기타)를 초기 렌더링 이미지로 설정
+  - 브라우저 정적 HTML 캐싱 환경에 대응하기 위해 `desk-main-hero-img`에 `data-day-src` 및 `data-night-src` 속성 추가
+  - 클라이언트 측 경량 즉시 실행 인라인 스크립트를 추가하여 방문자 로컬 브라우저 시각을 확인하고 캐시된 이미지와 불일치 시 즉각 교체 보정
+- `functions.php`: 테마 버전을 `1.5.2`로 상향
+- `style.css`: 테마 헤더 버전을 `1.5.2`로 상향
+- `README.md`: 주간/야간 일러스트 파일 설명 추가
+
+### 수정한 파일
+- front-page.php
+- style.css
+- functions.php
+- README.md
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l front-page.php` 및 `php -l functions.php` 문법 검사 통과
+- 시간대 조건 분기(`7 <= hour < 18`) 및 클라이언트 캐시 보정 스크립트 정상 동작 확인
+
 ## [1.5.1] - 2026-09-16
 
 ### 변경 날짜
