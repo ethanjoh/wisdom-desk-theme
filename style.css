@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.6
+Version: 1.6.7
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -8639,10 +8639,159 @@ body:has(.home-layout) .area-main {
   display: none !important;
 }
 
+/* -------------------------------------------------------------------------
+ * Pagination (공통 및 아카이브/검색 페이징)
+ * ---------------------------------------------------------------------- */
+.area-paging,
 .archive-paging {
+  width: 100% !important;
+  margin: 48px auto 64px !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+  clear: both !important;
   grid-column: 1 / -1 !important;
-  margin-top: 36px !important;
 }
+
+.area-paging .navigation.pagination,
+.archive-paging .navigation.pagination {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.area-paging .screen-reader-text,
+.archive-paging .screen-reader-text {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.area-paging .nav-links,
+.archive-paging .nav-links {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+.area-paging .page-numbers,
+.archive-paging .page-numbers {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 38px !important;
+  height: 38px !important;
+  padding: 0 12px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  line-height: 1 !important;
+  color: #475569 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.area-paging a.page-numbers:hover,
+.archive-paging a.page-numbers:hover {
+  color: #f05a3c !important;
+  background-color: #fff8f6 !important;
+  border-color: #f05a3c !important;
+  box-shadow: 0 3px 8px rgba(240, 90, 60, 0.15) !important;
+  transform: translateY(-1px) !important;
+}
+
+.area-paging .page-numbers.current,
+.archive-paging .page-numbers.current {
+  color: #ffffff !important;
+  background: #f05a3c !important;
+  border-color: #f05a3c !important;
+  font-weight: 700 !important;
+  box-shadow: 0 3px 10px rgba(240, 90, 60, 0.35) !important;
+  cursor: default !important;
+  pointer-events: none !important;
+}
+
+.area-paging .page-numbers.prev,
+.area-paging .page-numbers.next,
+.archive-paging .page-numbers.prev,
+.archive-paging .page-numbers.next {
+  padding: 0 16px !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+  letter-spacing: -0.2px !important;
+}
+
+.area-paging .page-numbers.dots,
+.archive-paging .page-numbers.dots {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: #94a3b8 !important;
+  letter-spacing: 2px !important;
+  cursor: default !important;
+  padding: 0 4px !important;
+  min-width: 24px !important;
+}
+
+.area-paging .link_page {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 38px !important;
+  height: 38px !important;
+  padding: 0 12px !important;
+  margin: 0 4px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #475569 !important;
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+}
+
+.area-paging .link_page:hover {
+  color: #f05a3c !important;
+  background-color: #fff8f6 !important;
+  border-color: #f05a3c !important;
+  transform: translateY(-1px) !important;
+}
+
+.area-paging .selected {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 38px !important;
+  height: 38px !important;
+  padding: 0 12px !important;
+  margin: 0 4px !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  background: #f05a3c !important;
+  border: 1px solid #f05a3c !important;
+  border-radius: 8px !important;
+  box-shadow: 0 3px 10px rgba(240, 90, 60, 0.35) !important;
+}
+
 
 @media screen and (max-width: 1060px) {
   .archive-modern-list {
@@ -8794,7 +8943,35 @@ body:has(.home-layout) .area-main {
     color: #999 !important;
     margin: 0 !important;
   }
+
+  /* 모바일 페이징 최적화 */
+  .area-paging,
+  .archive-paging {
+    margin: 36px auto 48px !important;
+  }
+
+  .area-paging .nav-links,
+  .archive-paging .nav-links {
+    gap: 6px !important;
+  }
+
+  .area-paging .page-numbers,
+  .archive-paging .page-numbers {
+    min-width: 34px !important;
+    height: 34px !important;
+    padding: 0 10px !important;
+    font-size: 13px !important;
+    border-radius: 6px !important;
+  }
+
+  .area-paging .page-numbers.prev,
+  .area-paging .page-numbers.next,
+  .archive-paging .page-numbers.prev,
+  .archive-paging .page-numbers.next {
+    padding: 0 12px !important;
+  }
 }
+
 
 
 /* ========================================================================
