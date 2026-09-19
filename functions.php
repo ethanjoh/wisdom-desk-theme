@@ -6,7 +6,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'TISTORY_STYLE_VERSION', '1.6.5' );
+define( 'TISTORY_STYLE_VERSION', '1.6.6' );
 
 /* -------------------------------------------------------------------------
  * Theme setup
@@ -378,3 +378,13 @@ function tistory_style_fallback_menu() {
 	tistory_style_category_sidebar();
 	echo '</nav>';
 }
+
+/* -------------------------------------------------------------------------
+ * Archive posts per page: 3 rows x 4 columns = 12 posts per page
+ * ---------------------------------------------------------------------- */
+function tistory_style_archive_posts_per_page( $query ) {
+	if ( ! is_admin() && $query->is_main_query() && $query->is_archive() ) {
+		$query->set( 'posts_per_page', 12 );
+	}
+}
+add_action( 'pre_get_posts', 'tistory_style_archive_posts_per_page' );
