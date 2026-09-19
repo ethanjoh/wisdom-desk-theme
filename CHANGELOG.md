@@ -1,6 +1,36 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.5] - 2026-09-19
+
+### 변경 날짜
+- 2026-09-19
+
+### 변경 목적
+- 본문에 삽입된 인라인 SVG 및 Mermaid 다이어그램 내부의 텍스트가 워드프레스 테마의 단락 스타일(`p { font-size: 1.125rem !important; line-height: 1.75 !important; }`)을 상속받아 과도하게 커지고 박스를 벗어나 잘리는 현상 수정
+
+### 주요 결정 사항
+- `style.css`:
+  - 테마 헤더 버전을 `1.6.5`로 상향
+  - 본문 영역(`.entry-content`, `.article-content`, `.article-view`, `#article-view`) 내 인라인 SVG 전용 격리 및 리셋 스타일 추가
+  - `svg foreignObject`에 `overflow: visible !important;`를 부여하여 박스 경계선으로 인한 텍스트 잘림 방지
+  - `svg foreignObject p`, `svg .nodeLabel p`, `svg .label p`, `svg .cluster-label p` 등에 `font-size: 13px !important; line-height: 1.4 !important; margin: 0 !important;`를 적용하여 테마 전역의 `p` 태그 `!important` 크기/줄간격 오버라이드 차단
+  - `svg text` 요소에도 기본 `font-size: 13px !important;` 및 공통 폰트 패밀리 지정
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.5`로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.5 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- Puppeteer 기반 실제 워드프레스 테마 CSS 및 Mermaid 인라인 SVG 결합 렌더링 검증 완료:
+  - 텍스트 크기가 18px -> 13px로 정상 리셋되고 줄간격 및 여백이 정돈됨
+  - 서브그래프 및 노드 박스 내부의 모든 텍스트가 한 글자도 잘리지 않고 온전히 표시됨 확인
+
 ## [1.6.4] - 2026-09-17
 
 ### 변경 날짜

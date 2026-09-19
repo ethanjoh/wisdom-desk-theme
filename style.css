@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.4
+Version: 1.6.5
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -6640,6 +6640,66 @@ body {
 .article-content pre,
 #article-view pre code.hljs {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+/* 5. 본문 내 인라인 SVG / Mermaid 다이어그램 텍스트 격리 및 리셋 */
+.entry-content svg,
+.article-content svg,
+.article-view svg,
+#article-view svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
+}
+
+.entry-content svg foreignObject,
+.article-content svg foreignObject,
+.article-view svg foreignObject,
+#article-view svg foreignObject {
+  overflow: visible !important;
+}
+
+.entry-content svg foreignObject p,
+.article-content svg foreignObject p,
+.article-view svg foreignObject p,
+#article-view svg foreignObject p,
+.entry-content svg .nodeLabel p,
+.article-content svg .nodeLabel p,
+.article-view svg .nodeLabel p,
+#article-view svg .nodeLabel p,
+.entry-content svg .label p,
+.article-content svg .label p,
+.article-view svg .label p,
+#article-view svg .label p,
+.entry-content svg .cluster-label p,
+.article-content svg .cluster-label p,
+.article-view svg .cluster-label p,
+#article-view svg .cluster-label p {
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif !important;
+  letter-spacing: -0.2px !important;
+  word-break: keep-all;
+}
+
+.entry-content svg foreignObject div,
+.article-content svg foreignObject div,
+.article-view svg foreignObject div,
+#article-view svg foreignObject div {
+  line-height: 1.4 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.entry-content svg text,
+.article-content svg text,
+.article-view svg text,
+#article-view svg text {
+  font-size: 13px !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif !important;
 }
 
 /* ========================================================
