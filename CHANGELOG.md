@@ -1,6 +1,31 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.12] - 2026-09-20
+
+### 변경 날짜
+- 2026-09-20
+
+### 변경 목적
+- 모바일 화면(1060px 이하)의 프론트 페이지에서 헤더 밑단 및 로고 박스 하단 경계선(border-bottom)이 이미지 바로 위에 이중 라인으로 노출되던 현상 완전 제거
+
+### 주요 결정 사항
+- `style.css`:
+  - 테마 헤더 버전을 `1.6.12`로 상향
+  - 모바일 미디어 쿼리(`max-width: 1060px`)에 `body:has(.frontpage-hero) .header` 및 `.header .box-header`의 `border-bottom: none !important;`, `padding-bottom: 0 !important;`를 적용하여 데스크 일러스트 이미지 위 라인 제거
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.12`로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.12 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- 모바일 헤더 경계선 제거 CSS 정합성 검증 완료
+
 ## [1.6.11] - 2026-09-20
 
 ### 변경 날짜
