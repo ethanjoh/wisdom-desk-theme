@@ -1,6 +1,32 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.11] - 2026-09-20
+
+### 변경 날짜
+- 2026-09-20
+
+### 변경 목적
+- CSS 명시도 충돌(`#tt-body-index #container { margin-top: 0; }`) 및 `.frontpage-hero`의 기본 마진 설정으로 인해 상단 여백이 무시되던 현상 완전 해결
+
+### 주요 결정 사항
+- `style.css`:
+  - 테마 헤더 버전을 `1.6.11`로 상향
+  - `body:has(.frontpage-hero) .frontpage-hero`에 직접 `margin: 48px auto 60px !important;`를 부여하여 `#container`와의 마진 상쇄 및 ID 명시도 충돌 없이 헤더 구분선 아래에 정확히 48px의 상단 여백 적용
+  - 모바일(`max-width: 1060px`)에서는 `margin: 20px auto 40px !important;`로 모바일 화면 비율에 알맞게 분리 적용
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.11`로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.11 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- `.frontpage-hero` 직접 마진 오버라이드(`!important`) CSS 정합성 검증 완료
+
 ## [1.6.10] - 2026-09-20
 
 ### 변경 날짜

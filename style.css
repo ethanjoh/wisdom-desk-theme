@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.10
+Version: 1.6.11
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -9813,7 +9813,7 @@ body:has(.frontpage-hero) .header {
 }
 
 body:has(.frontpage-hero) #container {
-  margin-top: 48px;
+  margin-top: 0 !important;
 }
 
 body:has(.frontpage-hero) .main {
@@ -9833,5 +9833,11 @@ body:has(.frontpage-hero) .area-main {
 }
 
 body:has(.frontpage-hero) .frontpage-hero {
-  margin: 0 auto 60px;
+  margin: 48px auto 60px !important;
+}
+
+@media screen and (max-width: 1060px) {
+  body:has(.frontpage-hero) .frontpage-hero {
+    margin: 20px auto 40px !important;
+  }
 }
