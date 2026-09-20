@@ -1,6 +1,31 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.10] - 2026-09-20
+
+### 변경 날짜
+- 2026-09-20
+
+### 변경 목적
+- PC 화면에서 프론트 데스크 일러스트 이미지가 상단 헤더 구분선에 너무 바짝 붙어 있어 답답해 보이는 현상 개선 및 시원한 상단 호흡 여백 확보
+
+### 주요 결정 사항
+- `style.css`:
+  - 테마 헤더 버전을 `1.6.10`로 상향
+  - `body:has(.frontpage-hero) #container`의 상단 여백(`margin-top`)을 기존 24px에서 `48px`로 상향 조정하여 헤더와 데스크 일러스트 간 시각적 여유 확보
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.10`으로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.10 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- CSS 여백(`margin-top: 48px`) 적용 확인 완료
+
 ## [1.6.9] - 2026-09-20
 
 ### 변경 날짜
