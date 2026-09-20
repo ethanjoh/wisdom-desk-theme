@@ -6,7 +6,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'TISTORY_STYLE_VERSION', '1.6.8' );
+define( 'TISTORY_STYLE_VERSION', '1.6.9' );
 
 /* -------------------------------------------------------------------------
  * Theme setup
@@ -201,6 +201,23 @@ function tistory_style_get_thumbnail_url( $size = 'tistory-style-cover' ) {
 }
 
 /**
+ * Get total post count for a category including all of its child/descendant categories.
+ */
+function tistory_style_get_category_total_post_count( $category ) {
+	$total_count = (int) $category->count;
+	$children    = get_term_children( $category->term_id, 'category' );
+	if ( ! empty( $children ) && ! is_wp_error( $children ) ) {
+		foreach ( $children as $child_id ) {
+			$child = get_category( $child_id );
+			if ( $child && ! is_wp_error( $child ) ) {
+				$total_count += (int) $child->count;
+			}
+		}
+	}
+	return $total_count;
+}
+
+/**
  * Category & sub-category sidebar list (skin: box-category box-category-2depth)
  */
 function tistory_style_category_sidebar() {
@@ -216,12 +233,13 @@ function tistory_style_category_sidebar() {
 				'parent'     => $category->term_id,
 			)
 		);
+		$parent_count = tistory_style_get_category_total_post_count( $category );
 		echo '<li>';
 		printf(
 			'<a href="%s" class="link_item">%s <span class="c_cnt">(%d)</span></a>',
 			esc_url( get_category_link( $category ) ),
 			esc_html( $category->name ),
-			(int) $category->count
+			(int) $parent_count
 		);
 		if ( ! empty( $children ) ) {
 			echo '<ul class="sub_category_list">';
