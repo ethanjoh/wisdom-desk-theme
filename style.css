@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.7
+Version: 1.6.8
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -520,6 +520,8 @@ html {
   position: relative;
   max-width: 1480px;
   margin: 0 auto;
+  padding: 0 32px;
+  box-sizing: border-box;
 }
 
 .header .title-logo {
@@ -630,7 +632,8 @@ html {
   position: relative;
   max-width: 1480px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 32px;
+  box-sizing: border-box;
 }
 
 #footer .box-policy {
@@ -891,6 +894,8 @@ html {
   width: 100%;
   max-width: 1480px;
   margin: 0 auto;
+  padding: 0 32px;
+  box-sizing: border-box;
 }
 
 .area-main {
@@ -4529,7 +4534,7 @@ hr[data-ke-style='style8'],
 .inner-bottom-widget {
   max-width: 1480px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 32px;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -4662,8 +4667,9 @@ hr[data-ke-style='style8'],
     position: relative !important;
     max-width: 1480px !important;
     margin: 0 auto !important;
-    padding: 25px 20px 10px 20px !important;
+    padding: 25px 32px 10px 32px !important;
     overflow: visible !important;
+    box-sizing: border-box !important;
   }
 
   .header .box-header {
@@ -8991,6 +8997,8 @@ body:has(.home-layout) .area-main {
     width: 100%;
     max-width: 1480px;
     margin: 0 auto;
+    padding: 0 32px;
+    box-sizing: border-box;
   }
 
   body:has(.home-layout) .area-main {
@@ -9283,6 +9291,8 @@ body:has(.home-layout) .area-main {
     width: 100%;
     max-width: 1480px;
     margin: 0 auto;
+    padding: 0 32px;
+    box-sizing: border-box;
   }
 
   body:has(.home-layout) .area-main {
@@ -9809,6 +9819,8 @@ body:has(.frontpage-hero) #container {
 body:has(.frontpage-hero) .main {
   max-width: 1480px !important;
   margin: 0 auto !important;
+  padding: 0 32px !important;
+  box-sizing: border-box !important;
   float: none !important;
 }
 
