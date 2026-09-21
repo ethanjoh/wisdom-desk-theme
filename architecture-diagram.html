@@ -1,0 +1,511 @@
+<!-- Wisdom Desk 테마 전체 소스코드 아키텍처 및 함수/템플릿 관계 다이아그램 -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wisdom Desk 테마 소스코드 구조 및 관계 다이아그램</title>
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Geist:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f8f9fa;
+      --paper-card: #ffffff;
+      --ink: #1f2937;
+      --muted: #4b5563;
+      --soft: #6b7280;
+      --border: rgba(31, 41, 55, 0.12);
+      --accent: #f05a3c;
+      --accent-tint: #fff1ee;
+      --link: #2563eb;
+      --link-tint: #eff6ff;
+      --zone-bg: rgba(31, 41, 55, 0.02);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--paper);
+      color: var(--ink);
+      font-family: 'Geist', 'Noto Sans KR', sans-serif;
+      padding: 40px 24px 60px;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    header {
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.5rem;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 800px;
+    }
+
+    .diagram-wrapper {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 32px;
+      overflow-x: auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-width: 1200px;
+    }
+
+    /* Summary cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr 0.95fr;
+      gap: 20px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--paper-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .card .eyebrow {
+      font-size: 10px;
+      color: var(--soft);
+      margin-bottom: 8px;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .card-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .card-dot.coral { background: var(--accent); }
+    .card-dot.blue { background: var(--link); }
+    .card-dot.ink { background: var(--ink); }
+
+    .card h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .card ul {
+      list-style: none;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .card ul li {
+      position: relative;
+      padding-left: 14px;
+      margin-bottom: 8px;
+      line-height: 1.45;
+    }
+
+    .card ul li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--soft);
+    }
+
+    .card code {
+      font-family: 'Geist Mono', monospace;
+      font-size: 11.5px;
+      background: #f1f3f5;
+      padding: 2px 5px;
+      border-radius: 4px;
+      color: var(--ink);
+    }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Geist Mono', monospace;
+      font-size: 11px;
+      color: var(--soft);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <p class="eyebrow">Wisdom Desk Architecture</p>
+      <h1>시스템 소스코드 구조 및 함수·템플릿 관계도</h1>
+      <p class="subtitle">워드프레스 테마의 진입 템플릿(Pages), 공통 레이아웃 셸(Shell), 핵심 비즈니스 로직(Functions), 클라이언트 인터랙션(JavaScript) 간의 호출 및 데이터 흐름을 도식화한 아키텍처 다이아그램입니다.</p>
+    </header>
+
+    <div class="diagram-wrapper">
+      <svg role="img" aria-labelledby="theme-arch-title theme-arch-desc" viewBox="0 0 1240 840" xmlns="http://www.w3.org/2000/svg">
+        <title id="theme-arch-title">Wisdom Desk 테마 소스코드 아키텍처 다이아그램</title>
+        <desc id="theme-arch-desc">템플릿 레이어, 공통 레이아웃 셸, functions.php의 핵심 함수 엔진, theme.js 클라이언트 스크립트의 상호 연결 구조를 나타냅니다.</desc>
+
+        <defs>
+          <marker id="arrow-default" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/>
+          </marker>
+          <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#f05a3c"/>
+          </marker>
+          <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+            <polygon points="0 0, 8 3, 0 6" fill="#2563eb"/>
+          </marker>
+        </defs>
+
+        <!-- Background -->
+        <rect width="100%" height="100%" fill="#ffffff" rx="8"/>
+
+        <!-- ====================================================================
+             ZONES (영역 컨테이너)
+             ==================================================================== -->
+        <!-- ZONE 1: Page Templates -->
+        <rect x="30" y="30" width="880" height="150" rx="8" fill="rgba(31,41,55,0.02)" stroke="rgba(31,41,55,0.12)" stroke-width="1"/>
+        <text x="46" y="52" fill="#4b5563" font-family="'Geist Mono', monospace" font-size="10" font-weight="600" letter-spacing="0.1em">ZONE 1 · PAGE TEMPLATES (URL ENTRY POINTS)</text>
+
+        <!-- ZONE 2: Common Layout Shell -->
+        <rect x="940" y="30" width="270" height="430" rx="8" fill="rgba(31,41,55,0.02)" stroke="rgba(31,41,55,0.12)" stroke-width="1"/>
+        <text x="956" y="52" fill="#4b5563" font-family="'Geist Mono', monospace" font-size="10" font-weight="600" letter-spacing="0.1em">ZONE 2 · LAYOUT SHELL</text>
+
+        <!-- ZONE 3: Core Function Engine (functions.php) -->
+        <rect x="30" y="240" width="880" height="490" rx="8" fill="rgba(240,90,60,0.02)" stroke="rgba(240,90,60,0.25)" stroke-width="1" stroke-dasharray="6,4"/>
+        <text x="46" y="262" fill="#f05a3c" font-family="'Geist Mono', monospace" font-size="10" font-weight="600" letter-spacing="0.1em">ZONE 3 · CORE FUNCTION ENGINE (functions.php)</text>
+
+        <!-- ZONE 4: Client Interaction (js/theme.js) -->
+        <rect x="940" y="490" width="270" height="240" rx="8" fill="rgba(37,99,235,0.02)" stroke="rgba(37,99,235,0.25)" stroke-width="1" stroke-dasharray="6,4"/>
+        <text x="956" y="512" fill="#2563eb" font-family="'Geist Mono', monospace" font-size="10" font-weight="600" letter-spacing="0.1em">ZONE 4 · CLIENT JS (theme.js)</text>
+
+        <!-- ====================================================================
+             CONNECTORS (Draw before boxes so z-index stays clean)
+             ==================================================================== -->
+        <!-- FrontPage -> Header/Footer (include) -->
+        <path d="M 230,105 L 940,105" fill="none" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="4,4" marker-end="url(#arrow-default)"/>
+        <!-- FrontPage -> find_category (functions) -->
+        <path d="M 140,150 L 140,310" fill="none" stroke="#f05a3c" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+        <!-- FrontPage -> has_new_post (functions) -->
+        <path d="M 180,150 L 180,210 Q 180,220 190,220 L 330,220 Q 340,220 340,230 L 340,310" fill="none" stroke="#f05a3c" stroke-width="1.2" marker-end="url(#arrow-accent)"/>
+
+        <!-- Archive -> render_card -->
+        <path d="M 370,150 L 370,450" fill="none" stroke="#4f5d75" stroke-width="1.4" marker-end="url(#arrow-default)"/>
+        <!-- Single -> get_thumbnail_url -->
+        <path d="M 590,150 L 590,310" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow-default)"/>
+        <!-- Single -> category_rank_widget -->
+        <path d="M 640,150 L 640,450" fill="none" stroke="#f05a3c" stroke-width="1.4" marker-end="url(#arrow-accent)"/>
+
+        <!-- render_card -> get_thumbnail_url -->
+        <path d="M 460,490 L 520,380" fill="none" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="3,3" marker-end="url(#arrow-default)"/>
+
+        <!-- Sidebar -> category_sidebar -->
+        <path d="M 970,330 Q 920,330 920,400 Q 920,490 850,490" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow-default)"/>
+        <!-- category_sidebar -> get_category_total_post_count -->
+        <path d="M 750,540 L 750,600" fill="none" stroke="#4f5d75" stroke-width="1.4" marker-end="url(#arrow-default)"/>
+
+        <!-- Layout Shell -> theme.js (DOM Binding) -->
+        <path d="M 1075,410 L 1075,540" fill="none" stroke="#2563eb" stroke-width="1.4" marker-end="url(#arrow-link)"/>
+        <!-- theme.js -> Embed Auto Height Sync (Single post content) -->
+        <path d="M 970,700 Q 880,700 880,680 L 670,680 Q 660,680 660,540" fill="none" stroke="#2563eb" stroke-width="1.2" stroke-dasharray="4,4" marker-end="url(#arrow-link)"/>
+
+        <!-- Connector Labels with Opaque Mask Rectangles -->
+        <g>
+          <rect x="520" y="93" width="76" height="14" rx="2" fill="#ffffff"/>
+          <text x="558" y="103" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="7.5" text-anchor="middle" letter-spacing="0.05em">GET_HEADER()</text>
+
+          <rect x="100" y="222" width="80" height="14" rx="2" fill="#ffffff"/>
+          <text x="140" y="232" fill="#f05a3c" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" text-anchor="middle">CATEGORY MAP</text>
+
+          <rect x="330" y="278" width="80" height="14" rx="2" fill="#ffffff"/>
+          <text x="370" y="288" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="7.5" text-anchor="middle">CARD LOOP (12)</text>
+
+          <rect x="650" y="278" width="70" height="14" rx="2" fill="#ffffff"/>
+          <text x="685" y="288" fill="#f05a3c" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" text-anchor="middle">STICKY RANK</text>
+
+          <rect x="710" y="562" width="80" height="14" rx="2" fill="#ffffff"/>
+          <text x="750" y="572" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="7.5" text-anchor="middle">RECURSIVE COUNT</text>
+
+          <rect x="1035" y="468" width="80" height="14" rx="2" fill="#ffffff"/>
+          <text x="1075" y="478" fill="#2563eb" font-family="'Geist Mono', monospace" font-size="7.5" text-anchor="middle">INTERACTION</text>
+        </g>
+
+        <!-- ====================================================================
+             NODES (ZONE 1: Page Templates)
+             ==================================================================== -->
+        <!-- Front Page (Focal) -->
+        <g>
+          <rect x="50" y="70" width="180" height="80" rx="6" fill="#fff1ee" stroke="#f05a3c" stroke-width="1.5"/>
+          <rect x="58" y="78" width="46" height="13" rx="2" fill="none" stroke="#f05a3c" stroke-width="0.8"/>
+          <text x="81" y="88" fill="#f05a3c" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" text-anchor="middle">LANDING</text>
+          <text x="140" y="112" fill="#1f2937" font-family="'Geist', sans-serif" font-size="13" font-weight="600" text-anchor="middle">front-page.php</text>
+          <text x="140" y="132" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9" text-anchor="middle">Interactive Desk & QuickNav</text>
+        </g>
+
+        <!-- Archive Template -->
+        <g>
+          <rect x="270" y="70" width="180" height="80" rx="6" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+          <rect x="278" y="78" width="48" height="13" rx="2" fill="none" stroke="#4f5d75" stroke-width="0.8"/>
+          <text x="302" y="88" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="7.5" text-anchor="middle">ARCHIVE</text>
+          <text x="360" y="112" fill="#1f2937" font-family="'Geist', sans-serif" font-size="13" font-weight="600" text-anchor="middle">archive.php</text>
+          <text x="360" y="132" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9" text-anchor="middle">Category/Tag Grid (12 items)</text>
+        </g>
+
+        <!-- Single Post Template (Focal) -->
+        <g>
+          <rect x="490" y="70" width="180" height="80" rx="6" fill="#fff1ee" stroke="#f05a3c" stroke-width="1.5"/>
+          <rect x="498" y="78" width="42" height="13" rx="2" fill="none" stroke="#f05a3c" stroke-width="0.8"/>
+          <text x="519" y="88" fill="#f05a3c" font-family="'Geist Mono', monospace" font-size="7.5" font-weight="600" text-anchor="middle">POST</text>
+          <text x="580" y="112" fill="#1f2937" font-family="'Geist', sans-serif" font-size="13" font-weight="600" text-anchor="middle">single.php</text>
+          <text x="580" y="132" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9" text-anchor="middle">Article View & Sticky Rank</text>
+        </g>
+
+        <!-- Other Sub-templates (index, search, page, 404) -->
+        <g>
+          <rect x="710" y="70" width="180" height="80" rx="6" fill="#ffffff" stroke="#1f2937" stroke-width="1" stroke-dasharray="4,3"/>
+          <rect x="718" y="78" width="42" height="13" rx="2" fill="none" stroke="#4f5d75" stroke-width="0.8"/>
+          <text x="739" y="88" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="7.5" text-anchor="middle">FEEDS</text>
+          <text x="800" y="107" fill="#1f2937" font-family="'Geist', sans-serif" font-size="11.5" font-weight="600" text-anchor="middle">index · search · page</text>
+          <text x="800" y="123" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="8.5" text-anchor="middle">Fallback Home / Queries</text>
+          <text x="800" y="138" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="8" text-anchor="middle">404.php error template</text>
+        </g>
+
+        <!-- ====================================================================
+             NODES (ZONE 2: Common Layout Shell)
+             ==================================================================== -->
+        <!-- Header -->
+        <g>
+          <rect x="965" y="75" width="220" height="65" rx="6" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+          <rect x="973" y="83" width="42" height="13" rx="2" fill="none" stroke="#4f5d75" stroke-width="0.8"/>
+          <text x="994" y="93" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="7" text-anchor="middle">HEADER</text>
+          <text x="1075" y="107" fill="#1f2937" font-family="'Geist', sans-serif" font-size="12" font-weight="600" text-anchor="middle">header.php</text>
+          <text x="1075" y="124" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="8.5" text-anchor="middle">GNB NavWalker, Search, Hero</text>
+        </g>
+
+        <!-- Sidebar (Drawer) -->
+        <g>
+          <rect x="965" y="160" width="220" height="70" rx="6" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+          <rect x="973" y="168" width="46" height="13" rx="2" fill="none" stroke="#4f5d75" stroke-width="0.8"/>
+          <text x="996" y="178" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="7" text-anchor="middle">SIDEBAR</text>
+          <text x="1075" y="193" fill="#1f2937" font-family="'Geist', sans-serif" font-size="12" font-weight="600" text-anchor="middle">sidebar.php</text>
+          <text x="1075" y="210" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="8.5" text-anchor="middle">Mobile Drawer & Category Box</text>
+        </g>
+
+        <!-- Comments Template -->
+        <g>
+          <rect x="965" y="250" width="220" height="65" rx="6" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+          <rect x="973" y="258" width="46" height="13" rx="2" fill="none" stroke="#4f5d75" stroke-width="0.8"/>
+          <text x="996" y="268" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="7" text-anchor="middle">COMMENT</text>
+          <text x="1075" y="282" fill="#1f2937" font-family="'Geist', sans-serif" font-size="12" font-weight="600" text-anchor="middle">comments.php</text>
+          <text x="1075" y="299" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="8.5" text-anchor="middle">Custom Reply Callback Tree</text>
+        </g>
+
+        <!-- Footer -->
+        <g>
+          <rect x="965" y="335" width="220" height="65" rx="6" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+          <rect x="973" y="343" width="42" height="13" rx="2" fill="none" stroke="#4f5d75" stroke-width="0.8"/>
+          <text x="994" y="353" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="7" text-anchor="middle">FOOTER</text>
+          <text x="1075" y="367" fill="#1f2937" font-family="'Geist', sans-serif" font-size="12" font-weight="600" text-anchor="middle">footer.php</text>
+          <text x="1075" y="384" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="8.5" text-anchor="middle">Bottom Widgets & Copyright</text>
+        </g>
+
+        <!-- ====================================================================
+             NODES (ZONE 3: Core Function Engine - functions.php)
+             ==================================================================== -->
+        <!-- Row 1: Frontpage & Thumbnail Helpers -->
+        <g>
+          <rect x="50" y="310" width="230" height="90" rx="6" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+          <text x="65" y="335" fill="#f05a3c" font-family="'Geist Mono', monospace" font-size="11" font-weight="600">wisdom_desk_find_category()</text>
+          <text x="65" y="355" fill="#1f2937" font-family="'Geist', sans-serif" font-size="12">카테고리 슬러그/명 자동 탐색</text>
+          <text x="65" y="375" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9">Lifelog, Travel, BookReview 자동 매핑</text>
+        </g>
+
+        <g>
+          <rect x="300" y="310" width="210" height="90" rx="6" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+          <text x="315" y="335" fill="#f05a3c" font-family="'Geist Mono', monospace" font-size="10.5" font-weight="600">...category_has_new_post()</text>
+          <text x="315" y="355" fill="#1f2937" font-family="'Geist', sans-serif" font-size="12">최근 N일 신규 글 발행 여부</text>
+          <text x="315" y="375" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9">모니터/퀵버튼 빨간 점 뱃지 활성화</text>
+        </g>
+
+        <g>
+          <rect x="530" y="310" width="360" height="90" rx="6" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+          <text x="545" y="335" fill="#1f2937" font-family="'Geist Mono', monospace" font-size="11" font-weight="600">tistory_style_get_thumbnail_url()</text>
+          <text x="545" y="355" fill="#1f2937" font-family="'Geist', sans-serif" font-size="12">3단계 썸네일 자동 추출 알고리즘</text>
+          <text x="545" y="375" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9">1. Feature Image → 2. First Body &lt;img&gt; → 3. Default Fallback</text>
+        </g>
+
+        <!-- Row 2: Render Card & Category Rank Widget -->
+        <g>
+          <rect x="50" y="450" width="410" height="90" rx="6" fill="#fff1ee" stroke="#f05a3c" stroke-width="1.5"/>
+          <text x="65" y="475" fill="#f05a3c" font-family="'Geist Mono', monospace" font-size="11.5" font-weight="600">tistory_style_render_card()</text>
+          <text x="65" y="495" fill="#1f2937" font-family="'Geist', sans-serif" font-size="12.5" font-weight="600">통합 모던 라운드 카드 렌더러</text>
+          <text x="65" y="515" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9">썸네일 + 반응형 Flex 배치 + 글자수 커스텀 요약문 + 카테고리 태그 + 날짜</text>
+        </g>
+
+        <g>
+          <rect x="480" y="450" width="410" height="90" rx="6" fill="#fff1ee" stroke="#f05a3c" stroke-width="1.5"/>
+          <text x="495" y="475" fill="#f05a3c" font-family="'Geist Mono', monospace" font-size="11.5" font-weight="600">tistory_style_category_rank_widget()</text>
+          <text x="495" y="495" fill="#1f2937" font-family="'Geist', sans-serif" font-size="12.5" font-weight="600">본문 우측 카테고리 최신글 랭킹 위젯</text>
+          <text x="495" y="515" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9">Sticky 고정 사이드바 · 현재 카테고리 내 최신글 10개 순위 뱃지 노출</text>
+        </g>
+
+        <!-- Row 3: Category Tree & Total Post Count Calculator -->
+        <g>
+          <rect x="50" y="590" width="410" height="110" rx="6" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+          <text x="65" y="615" fill="#1f2937" font-family="'Geist Mono', monospace" font-size="11.5" font-weight="600">tistory_style_category_sidebar()</text>
+          <text x="65" y="638" fill="#1f2937" font-family="'Geist', sans-serif" font-size="12">모바일 드로어 전용 모던 라운드 카테고리 박스</text>
+          <text x="65" y="658" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9">대분류 + 2depth 소분류 트리 인디케이터 라인</text>
+          <text x="65" y="675" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9">터치 친화적 패딩 및 글 수 (%d) 괄호 표기</text>
+        </g>
+
+        <g>
+          <rect x="480" y="590" width="410" height="110" rx="6" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+          <text x="495" y="615" fill="#1f2937" font-family="'Geist Mono', monospace" font-size="11" font-weight="600">tistory_style_get_category_total_post_count()</text>
+          <text x="495" y="638" fill="#1f2937" font-family="'Geist', sans-serif" font-size="12">하위 카테고리 글 수 재귀 합산 헬퍼</text>
+          <text x="495" y="658" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9">상위 카테고리에 직접 등록된 글이 없더라도</text>
+          <text x="495" y="675" fill="#4f5d75" font-family="'Geist Mono', monospace" font-size="9">모든 자손 카테고리의 글 수를 정확하게 누적 계산</text>
+        </g>
+
+        <!-- ====================================================================
+             NODES (ZONE 4: Client Interaction - theme.js)
+             ==================================================================== -->
+        <g>
+          <rect x="965" y="540" width="220" height="50" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+          <text x="975" y="560" fill="#2563eb" font-family="'Geist Mono', monospace" font-size="10" font-weight="600">Mobile Drawer Toggle</text>
+          <text x="975" y="575" fill="#4f5d75" font-family="'Geist', sans-serif" font-size="10">햄버거 버튼 + 배경 딤 클릭 닫기</text>
+        </g>
+
+        <g>
+          <rect x="965" y="605" width="220" height="50" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+          <text x="975" y="625" fill="#2563eb" font-family="'Geist Mono', monospace" font-size="10" font-weight="600">Mega Menu Height Calc</text>
+          <text x="975" y="640" fill="#4f5d75" font-family="'Geist', sans-serif" font-size="10">서브메뉴 최대 높이 실시간 반영</text>
+        </g>
+
+        <g>
+          <rect x="965" y="670" width="220" height="50" rx="6" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+          <text x="975" y="690" fill="#2563eb" font-family="'Geist Mono', monospace" font-size="10" font-weight="600">Embed Height Sync (v1.6.15)</text>
+          <text x="975" y="705" fill="#4f5d75" font-family="'Geist', sans-serif" font-size="10">postMessage 실시간 iframe 높이 동기화</text>
+        </g>
+
+        <!-- ====================================================================
+             LEGEND STRIP (Bottom)
+             ==================================================================== -->
+        <line x1="30" y1="770" x2="1210" y2="770" stroke="rgba(31,41,55,0.12)" stroke-width="0.8"/>
+        <text x="30" y="798" fill="#4b5563" font-family="'Geist Mono', monospace" font-size="9" font-weight="600" letter-spacing="0.14em">LEGEND</text>
+
+        <!-- Legend Items -->
+        <rect x="110" y="788" width="14" height="12" rx="2" fill="#fff1ee" stroke="#f05a3c" stroke-width="1.2"/>
+        <text x="132" y="798" fill="#1f2937" font-family="'Geist', sans-serif" font-size="11">핵심 노드 (Focal Templates & Handlers)</text>
+
+        <rect x="360" y="788" width="14" height="12" rx="2" fill="#ffffff" stroke="#1f2937" stroke-width="1"/>
+        <text x="382" y="798" fill="#1f2937" font-family="'Geist', sans-serif" font-size="11">템플릿 / 일반 함수 모듈</text>
+
+        <rect x="560" y="788" width="14" height="12" rx="2" fill="#eff6ff" stroke="#2563eb" stroke-width="1"/>
+        <text x="582" y="798" fill="#1f2937" font-family="'Geist', sans-serif" font-size="11">클라이언트 스크립트 (theme.js)</text>
+
+        <line x1="770" y1="794" x2="800" y2="794" stroke="#f05a3c" stroke-width="1.4"/>
+        <text x="808" y="798" fill="#1f2937" font-family="'Geist', sans-serif" font-size="11">핵심 로직 데이터 호출</text>
+
+        <line x1="950" y1="794" x2="980" y2="794" stroke="#4f5d75" stroke-width="1.2" stroke-dasharray="4,4"/>
+        <text x="988" y="798" fill="#1f2937" font-family="'Geist', sans-serif" font-size="11">템플릿 포함 (Include / Get)</text>
+      </svg>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="cards-grid">
+      <div class="card">
+        <p class="eyebrow">ENTRY & TEMPLATES</p>
+        <div class="card-header">
+          <span class="card-dot coral"></span>
+          <h3>페이지 진입 & 렌더링 파이프라인</h3>
+        </div>
+        <ul>
+          <li><code>front-page.php</code>: 데스크 일러스트와 3개 모니터/퀵버튼에 <code>wisdom_desk_find_category</code>를 매핑하고 7일 신규 글 빨간 점 뱃지를 표시합니다.</li>
+          <li><code>archive.php</code>: <code>pre_get_posts</code>로 12개 글을 고정 쿼리하여 <code>tistory_style_render_card</code> 그리드로 출력합니다.</li>
+          <li><code>single.php</code>: 3단계 썸네일 폴백으로 커버 배너를 세팅하고, 본문 우측에 <code>category_rank_widget</code>을 Sticky로 배치합니다.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <p class="eyebrow">CORE FUNCTIONS</p>
+        <div class="card-header">
+          <span class="card-dot coral"></span>
+          <h3>핵심 데이터 처리 엔진</h3>
+        </div>
+        <ul>
+          <li><code>tistory_style_get_thumbnail_url</code>: 대표 이미지 → 본문 첫 <code>&lt;img&gt;</code> → 기본 대체 이미지로 이어지는 3단계 무중단 이미지 추출 알고리즘입니다.</li>
+          <li><code>tistory_style_get_category_total_post_count</code>: 대분류 직속 글뿐 아니라 하위 2depth 자손 카테고리의 모든 글을 재귀 합산합니다.</li>
+          <li><code>tistory_style_render_card</code>: 반응형 Flex 그리드, 모던 라운드 카드, 2줄 말줄임 제목, 카테고리 태그 배지를 표준화하여 공급합니다.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <p class="eyebrow">CLIENT INTERACTION</p>
+        <div class="card-header">
+          <span class="card-dot blue"></span>
+          <h3>클라이언트 동작 & 반응형 대응</h3>
+        </div>
+        <ul>
+          <li><code>theme.js</code>: 햄버거 메뉴 터치 시 사이드바 서랍(<code>.area-aside</code>) 오픈 및 배경 딤(<code>.bg-dimmed</code>) 레이어를 활성화합니다.</li>
+          <li><code>Embed Height Sync</code>: 워드프레스 포스트 임베드 iframe의 postMessage를 청취하여 모바일 화면에서 하단 잘림을 원천 방지합니다.</li>
+          <li><code>Mega Menu</code>: 2depth 서브 카테고리 항목의 최대 높이를 동적 측정하여 GNB 호버 패널 높이를 최적화합니다.</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>
+      <span>WISDOM DESK THEME ARCHITECTURE SPECIFICATION</span>
+      <span>VERSION 1.6.15 · AUTOGENERATED</span>
+    </footer>
+  </div>
+
+</body>
+</html>

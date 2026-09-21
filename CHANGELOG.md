@@ -1,6 +1,32 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.16] - 2026-09-21
+
+### 변경 날짜
+- 2026-09-21
+
+### 변경 목적
+- PC 화면에서 워드프레스 포스트 임베드 카드가 본문 전체 너비로 과도하게 확대되던 현상을 해결하고, 원래 표준 규격 사이즈(600px)로 단정하게 렌더링되도록 개선
+
+### 주요 결정 사항
+- `style.css`:
+  - 테마 헤더 버전을 `1.6.16`으로 상향
+  - `iframe.wp-embedded-content`의 최대 너비를 PC 화면에서 워드프레스 표준 규격인 `max-width: 600px !important;` 및 `margin: 24px auto !important;`로 설정하여 중앙 정렬 및 원래 크기 복원
+  - 모바일 미디어 쿼리(`@media screen and (max-width: 640px)`)에서는 `max-width: 100% !important;`로 유동 반응형 유지
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.16`으로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.16 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- PC 600px 제한 및 모바일 100% 반응형 CSS 정합성 검증 완료
+
 ## [1.6.15] - 2026-09-21
 
 ### 변경 날짜
@@ -19,16 +45,20 @@
   - `TISTORY_STYLE_VERSION` 상수를 `1.6.15`로 상향하여 브라우저 CSS/JS 캐시 즉시 갱신 반영
 - `js/theme.js`:
   - 워드프레스 임베드 `message` 이벤트(`height`) 수신 시 `iframe.style.height`를 실시간 픽셀 단위로 정확하게 강제 동기화하는 핸들러 보강
+- `architecture-diagram.html`:
+  - 전체 소스코드 분석 기반의 페이지 템플릿, 공통 레이아웃 셸, functions.php 핵심 함수 엔진, 클라이언트 스크립트 관계를 나타내는 독립형 아키텍처 다이아그램 생성 (diagram-design 가이드라인 준수)
 - `CHANGELOG.md`: 버전 1.6.15 변경 사항 기록
 
 ### 수정한 파일
 - style.css
 - functions.php
 - js/theme.js
+- architecture-diagram.html
 - CHANGELOG.md
 
 ### 테스트 결과
 - `php -l functions.php` 문법 검사 통과
+- `python self_check.py architecture-diagram.html` 다이아그램 접근성 및 안전성 검사 통과
 - 워드프레스 포스트 임베드 반응형 높이 동기화 및 CSS 정합성 검증 완료
 
 ## [1.6.14] - 2026-09-21
