@@ -122,6 +122,41 @@ $desk_image_url   = $desk_image_day;
 				loading="eager"
 			/>
 
+			<!-- =======================================================
+			     2.5D 픽셀아트 오프닝 인트로 오버레이
+			     ======================================================= -->
+			<div id="pixel-intro-overlay" class="pixel-intro-overlay" aria-label="Wisdom Desk 오프닝 인트로">
+				<div class="intro-scene-wrapper">
+					<img
+						src="<?php echo esc_url( get_stylesheet_directory_uri() . '/images/concept_intro_room_2.jpg' ); ?>"
+						alt="Wisdom Desk 서재로 들어가는 캐릭터"
+						class="intro-scene-img"
+					/>
+					<div class="intro-door-light" aria-hidden="true"></div>
+				</div>
+
+				<!-- 인트로 조작 버튼 (SKIP) -->
+				<button type="button" id="intro-skip-btn" class="intro-skip-btn" aria-label="인트로 건너뛰기">
+					<span>SKIP</span>
+					<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
+						<path d="M5 4v16l11-8zm11 0v16h2V4z"/>
+					</svg>
+				</button>
+			</div>
+
+			<!-- 상단 보조 컨트롤: 인트로 다시 보기 버튼 -->
+			<button
+				type="button"
+				id="desk-intro-replay"
+				class="desk-intro-replay"
+				aria-label="오프닝 인트로 다시 보기"
+				title="오프닝 인트로 다시 보기"
+			>
+				<svg class="replay-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+					<polygon points="5 3 19 12 5 21 5 3"></polygon>
+				</svg>
+			</button>
+
 			<!-- 주간/야간 모드 수동 토글 버튼 (우측 상단) -->
 			<button
 				type="button"
@@ -194,6 +229,79 @@ $desk_image_url   = $desk_image_day;
 					var nextMode = (currentMode === 'day') ? 'night' : 'day';
 					applyMode(nextMode, true);
 				});
+			})();
+
+			/* 2.5D 픽셀아트 인트로 오버레이 애니메이션 & 세션 제어 */
+			(function() {
+				var INTRO_KEY = 'wisdom_desk_intro_played';
+				var overlay = document.getElementById('pixel-intro-overlay');
+				var skipBtn = document.getElementById('intro-skip-btn');
+				var replayBtn = document.getElementById('desk-intro-replay');
+				if (!overlay) return;
+
+				var zoomTimer = null;
+				var finishTimer = null;
+
+				function finishIntro(fast) {
+					clearTimeout(zoomTimer);
+					clearTimeout(finishTimer);
+					if (fast) {
+						overlay.classList.add('is-hidden');
+						overlay.classList.remove('is-active', 'is-zooming', 'is-fading');
+					} else {
+						overlay.classList.add('is-fading');
+						finishTimer = setTimeout(function() {
+							overlay.classList.add('is-hidden');
+							overlay.classList.remove('is-active', 'is-zooming', 'is-fading');
+						}, 600);
+					}
+					try {
+						sessionStorage.setItem(INTRO_KEY, '1');
+					} catch (e) {}
+				}
+
+				function playIntro() {
+					clearTimeout(zoomTimer);
+					clearTimeout(finishTimer);
+					overlay.classList.remove('is-hidden', 'is-fading', 'is-zooming');
+					overlay.classList.add('is-active');
+
+					// 0.8초 후 문 안쪽(오른쪽 데스크 78% 48%)으로 줌인 시작
+					zoomTimer = setTimeout(function() {
+						overlay.classList.add('is-zooming');
+
+						// 줌인 1.6초 지속 후 메인 일러스트로 페이드아웃 전환
+						finishTimer = setTimeout(function() {
+							finishIntro(false);
+						}, 1600);
+					}, 800);
+				}
+
+				// 첫 접속 여부 확인 (동일 브라우저 탭 세션 동안 1회만 자동 재생)
+				var hasPlayed = false;
+				try {
+					hasPlayed = sessionStorage.getItem(INTRO_KEY) === '1';
+				} catch (e) {}
+
+				if (!hasPlayed) {
+					playIntro();
+				} else {
+					overlay.classList.add('is-hidden');
+				}
+
+				if (skipBtn) {
+					skipBtn.addEventListener('click', function(e) {
+						e.preventDefault();
+						finishIntro(true);
+					});
+				}
+
+				if (replayBtn) {
+					replayBtn.addEventListener('click', function(e) {
+						e.preventDefault();
+						playIntro();
+					});
+				}
 			})();
 			</script>
 
