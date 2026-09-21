@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.13
+Version: 1.6.14
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -7844,9 +7844,30 @@ body#tt-body-index .area-paging-more {
 
 /* 반응형 미디어 쿼리 */
 @media screen and (max-width: 1060px) {
+  #tt-body-page .main,
+  body:has(.article-view-wrap) .main {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #tt-body-page .area-main,
+  body:has(.article-view-wrap) .area-main {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   .article-view-wrap {
     flex-direction: column !important;
     gap: 30px !important;
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+    width: auto !important;
   }
 
   .article-view-main {
@@ -7861,6 +7882,28 @@ body#tt-body-index .area-paging-more {
     position: static !important;
     top: auto !important;
     margin-top: 10px !important;
+  }
+
+  #tt-body-page .article-footer,
+  #tt-body-page .area-reply,
+  #tt-body-page #comments {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+    width: auto !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .article-view-wrap {
+    margin-left: 12px !important;
+    margin-right: 12px !important;
+  }
+
+  #tt-body-page .article-footer,
+  #tt-body-page .area-reply,
+  #tt-body-page #comments {
+    margin-left: 12px !important;
+    margin-right: 12px !important;
   }
 }
 
@@ -9868,7 +9911,30 @@ body:has(.frontpage-hero) .frontpage-hero {
     border-bottom: none !important;
   }
 
+  body:has(.frontpage-hero) .main {
+    display: block !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body:has(.frontpage-hero) .area-main {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
   body:has(.frontpage-hero) .frontpage-hero {
     margin: 20px auto 40px !important;
+    padding: 0 16px !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body:has(.frontpage-hero) .frontpage-hero {
+    padding: 0 12px !important;
   }
 }

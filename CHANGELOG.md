@@ -1,6 +1,32 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.14] - 2026-09-21
+
+### 변경 날짜
+- 2026-09-21
+
+### 변경 목적
+- 모바일 화면에서 메인 화면(인터랙티브 데스크 일러스트) 및 글 내용 보기 화면(본문 상세)의 좌우 여백이 과도하게 크게 나타나던 현상 해결
+
+### 주요 결정 사항
+- `style.css`:
+  - 테마 헤더 버전을 `1.6.14`로 상향
+  - 메인 화면(`body:has(.frontpage-hero)`): 모바일 미디어 쿼리(`@media screen and (max-width: 1060px)`)에서 `.main` 및 `.area-main`의 중첩 패딩을 `0`으로 리셋하고, `.frontpage-hero`의 좌우 패딩을 `16px`(480px 이하는 `12px`) 단일 여백으로 설정하여 일러스트와 퀵 버튼 너비를 시원하게 확장
+  - 글 내용 보기 화면(`#tt-body-page`, `body:has(.article-view-wrap)`): 모바일 미디어 쿼리에서 `.main` 및 `.area-main`의 중첩 패딩을 `0`으로 리셋하고, 본문 컨테이너(`.article-view-wrap`), 푸터(`.article-footer`), 댓글/방명록(`.area-reply`, `#comments`)의 좌우 여백을 `16px`(480px 이하는 `12px`)로 단일 적용하여 본문 가로 폭 확장 및 상단 배너 타이틀과의 수직 정렬 라인 일치
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.14`로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.14 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- 메인 화면 및 본문 상세 페이지 모바일 반응형 CSS 정합성 검증 완료
+
 ## [1.6.13] - 2026-09-21
 
 ### 변경 날짜
