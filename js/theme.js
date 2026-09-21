@@ -89,5 +89,23 @@
 			} );
 		} );
 
+		/* WordPress embed height synchronization (prevents bottom clipping) */
+		window.addEventListener( 'message', function ( event ) {
+			if ( ! event.data || typeof event.data !== 'object' ) return;
+			if ( event.data.message === 'height' && typeof event.data.value !== 'undefined' ) {
+				var iframes = document.querySelectorAll( 'iframe.wp-embedded-content' );
+				var targetHeight = parseInt( event.data.value, 10 );
+				if ( isNaN( targetHeight ) || targetHeight <= 0 ) return;
+
+				for ( var i = 0; i < iframes.length; i++ ) {
+					var iframe = iframes[i];
+					if ( ( event.data.secret && iframe.getAttribute( 'data-secret' ) === event.data.secret ) || iframe.contentWindow === event.source ) {
+						iframe.height = targetHeight;
+						iframe.style.setProperty( 'height', targetHeight + 'px', 'important' );
+					}
+				}
+			}
+		} );
+
 	} );
 } )();

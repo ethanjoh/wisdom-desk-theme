@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.14
+Version: 1.6.15
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -6399,11 +6399,23 @@ hr[data-ke-style='style8'],
 }
 
 @media screen and (max-width: 743px) {
-  .article-view iframe {
+  .article-view iframe:not(.wp-embedded-content) {
     width: 100%;
     height: 56vw;
     -ms-height: 56vmax;
   }
+}
+
+/* WordPress embedded post card iframe */
+iframe.wp-embedded-content,
+.article-view iframe.wp-embedded-content,
+#article-view iframe.wp-embedded-content {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto;
+  border: none !important;
+  box-sizing: border-box !important;
 }
 
 @media (max-width: 600px) {

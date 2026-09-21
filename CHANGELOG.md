@@ -1,6 +1,36 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.15] - 2026-09-21
+
+### 변경 날짜
+- 2026-09-21
+
+### 변경 목적
+- 모바일 화면에서 본문에 삽입된 워드프레스 포스트 임베드(글 카드 iframe)의 하단이 잘려 요약문 및 사이트 정보가 온전히 보이지 않던 현상 해결
+
+### 주요 결정 사항
+- `style.css`:
+  - 테마 헤더 버전을 `1.6.15`로 상향
+  - 743px 이하 모바일 미디어 쿼리의 비디오 전용 16:9 높이 규칙(`.article-view iframe { height: 56vw; }`)에서 워드프레스 포스트 임베드 카드를 제외(`.article-view iframe:not(.wp-embedded-content)`)
+  - `iframe.wp-embedded-content` 전용 스타일을 추가하여 높이가 내부 콘텐츠에 맞게 자동 조정(`height: auto;`)되도록 설정
+- `functions.php`:
+  - `add_theme_support( 'responsive-embeds' );` 테마 지원 추가로 반응형 임베드 정합성 확보
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.15`로 상향하여 브라우저 CSS/JS 캐시 즉시 갱신 반영
+- `js/theme.js`:
+  - 워드프레스 임베드 `message` 이벤트(`height`) 수신 시 `iframe.style.height`를 실시간 픽셀 단위로 정확하게 강제 동기화하는 핸들러 보강
+- `CHANGELOG.md`: 버전 1.6.15 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- js/theme.js
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- 워드프레스 포스트 임베드 반응형 높이 동기화 및 CSS 정합성 검증 완료
+
 ## [1.6.14] - 2026-09-21
 
 ### 변경 날짜

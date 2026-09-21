@@ -6,7 +6,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'TISTORY_STYLE_VERSION', '1.6.14' );
+define( 'TISTORY_STYLE_VERSION', '1.6.15' );
 
 /* -------------------------------------------------------------------------
  * Theme setup
@@ -18,6 +18,7 @@ function tistory_style_setup() {
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
+	add_theme_support( 'responsive-embeds' );
 	add_theme_support( 'customize-selective-refresh-widgets' );
 	add_theme_support(
 		'custom-logo',
