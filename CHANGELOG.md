@@ -1,6 +1,31 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.17] - 2026-09-21
+
+### 변경 날짜
+- 2026-09-21
+
+### 변경 목적
+- 카테고리 아카이브 카드 목록에서 카테고리명과 발행 날짜 사이에 불필요하게 노출되던 불릿 점(`.date:before`) 제거
+
+### 주요 결정 사항
+- `style.css`:
+  - 테마 버전을 `1.6.17`로 상향
+  - `.archive-card-grid .article-type-common .date:before`에 `display: none !important;`를 추가하여 데스크톱 및 모바일 환경에서 카테고리명 옆에 찍히던 가상요소 점(dot) 완전 제거
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.17`로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.17 변경 사항 기록
+
+### 수정한 파일
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php` 문법 검사 통과
+- 데스크톱 및 모바일 미디어 쿼리 내 `.date:before` 숨김 처리 CSS 유효성 검증 완료
+
 ## [1.6.16] - 2026-09-21
 
 ### 변경 날짜

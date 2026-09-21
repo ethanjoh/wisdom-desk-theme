@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.16
+Version: 1.6.17
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -8706,6 +8706,10 @@ body:has(.home-layout) .area-main {
   color: #999 !important;
 }
 
+.archive-card-grid .article-type-common .date:before {
+  display: none !important;
+}
+
 .archive-card-grid .article-type-common .reply {
   display: none !important;
 }
@@ -9035,6 +9039,10 @@ body:has(.home-layout) .area-main {
     font-size: 11px !important;
     color: #999 !important;
     margin: 0 !important;
+  }
+
+  .archive-card-grid .article-type-common .date:before {
+    display: none !important;
   }
 
   /* 모바일 페이징 최적화 */
