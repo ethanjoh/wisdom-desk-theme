@@ -101,6 +101,13 @@ $desk_image_url   = $desk_image_day;
      ======================================================================= -->
 <section class="frontpage-hero" aria-label="메인 데스크 카테고리 내비게이션">
 	<div class="frontpage-hero-container">
+		<?php $desk_tagline = get_bloginfo( 'description' ); ?>
+		<?php if ( ! empty( $desk_tagline ) ) : ?>
+			<div class="desk-tagline-wrap">
+				<p class="desk-tagline"><?php echo esc_html( $desk_tagline ); ?></p>
+			</div>
+		<?php endif; ?>
+
 		<div class="desk-interactive-wrapper">
 			<!-- 메인 배경 일러스트 (주간/야간 수동 전환 지원) -->
 			<img

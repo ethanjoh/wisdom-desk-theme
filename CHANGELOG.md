@@ -1,6 +1,34 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.18] - 2026-09-21
+
+### 변경 날짜
+- 2026-09-21
+
+### 변경 목적
+- 메인페이지(front-page.php) 데스크 일러스트 이미지 상단에 사이트 태그라인(블로그 설명)을 명조체 이탤릭 스타일로 표시하여 품격 있는 브랜딩 연출
+
+### 주요 결정 사항
+- `front-page.php`:
+  - 메인 인터랙티브 데스크 일러스트 컨테이너(`.desk-interactive-wrapper`) 상단에 `get_bloginfo('description')`를 출력하는 `.desk-tagline-wrap` 블록 추가
+- `style.css`:
+  - 테마 헤더 버전을 `1.6.18`로 상향
+  - `.desk-tagline`에 명조체(`"Noto Serif KR", "Batang", serif`) 및 이탤릭(`font-style: italic;`), 중앙 정렬 및 반응형 폰트 크기/줄간격/여백 스타일 적용
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.18`로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.18 변경 사항 기록
+
+### 수정한 파일
+- front-page.php
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l front-page.php` 및 `php -l functions.php` 문법 검사 통과
+- 메인페이지 일러스트 상단 태그라인 명조체 이탤릭 스타일링 CSS 유효성 검증 완료
+
 ## [1.6.17] - 2026-09-21
 
 ### 변경 날짜

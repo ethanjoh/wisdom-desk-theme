@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.17
+Version: 1.6.18
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -9530,6 +9530,37 @@ body:has(.home-layout) .area-main {
   width: 100%;
   max-width: 1480px;
   margin: 0 auto 56px;
+}
+
+/* 메인 일러스트 상단 명조체 이탤릭 태그라인 */
+.desk-tagline-wrap {
+  text-align: center;
+  margin: 0 auto 26px;
+  padding: 0 16px;
+}
+
+.desk-tagline {
+  font-family: "Noto Serif KR", "Batang", "Apple SD Gothic Neo", serif;
+  font-style: italic;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #4a5568;
+  letter-spacing: -0.01em;
+  margin: 0;
+  word-break: keep-all;
+}
+
+@media screen and (max-width: 768px) {
+  .desk-tagline-wrap {
+    margin-bottom: 18px;
+    padding: 0 12px;
+  }
+
+  .desk-tagline {
+    font-size: 15px;
+    line-height: 1.6;
+  }
 }
 
 .desk-interactive-wrapper {
