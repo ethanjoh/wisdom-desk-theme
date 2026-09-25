@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.22
+Version: 1.6.23
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -9998,4 +9998,69 @@ body:has(.frontpage-hero) .frontpage-hero {
   body:has(.frontpage-hero) .frontpage-hero {
     padding: 0 12px !important;
   }
+}
+
+/* ==========================================================================
+   네비게이션바 및 서브카테고리 최근 글(새 글) 오렌지색 도트 인디케이터
+   ========================================================================== */
+
+/* 1. 상단 네비게이션바(GNB) 1차 메뉴 버튼: 우측 상단 알림 뱃지형 오렌지 도트 */
+.header .area-gnb .category_list > li > a.link_item .nav-new-dot,
+.header .tt_category .category_list > li > a.link_item .nav-new-dot {
+  position: absolute !important;
+  top: 7px !important;
+  right: 9px !important;
+  width: 7px !important;
+  height: 7px !important;
+  background-color: #F05A3C !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 8px rgba(240, 90, 60, 0.75) !important;
+  pointer-events: none !important;
+  z-index: 100003 !important;
+  display: inline-block !important;
+  animation: nav-dot-pulse 2.4s infinite ease-in-out !important;
+}
+
+@keyframes nav-dot-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 2px #ffffff, 0 0 6px rgba(240, 90, 60, 0.7);
+  }
+  50% {
+    transform: scale(1.15);
+    box-shadow: 0 0 0 2px #ffffff, 0 0 10px rgba(240, 90, 60, 0.95);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 2px #ffffff, 0 0 6px rgba(240, 90, 60, 0.7);
+  }
+}
+
+/* 2. 메가메뉴 서브카테고리 메뉴 목록: 텍스트 및 개수 옆 인라인 오렌지 도트 */
+.header .area-gnb .category_list .sub_category_list li a.link_sub_item .nav-new-dot,
+.header .tt_category .category_list .sub_category_list li a.link_sub_item .nav-new-dot {
+  display: inline-block !important;
+  width: 5px !important;
+  height: 5px !important;
+  margin-left: 5px !important;
+  margin-right: 2px !important;
+  background-color: #F05A3C !important;
+  border-radius: 50% !important;
+  vertical-align: middle !important;
+  box-shadow: 0 0 5px rgba(240, 90, 60, 0.65) !important;
+  pointer-events: none !important;
+}
+
+/* 3. 사이드바 및 모바일 서랍(드로어) 카테고리 메뉴 내 오렌지 도트 */
+.area-aside .box-category .category_list > li > a.link_item .nav-new-dot,
+.area-aside .box-category .sub_category_list li a.link_sub_item .nav-new-dot {
+  display: inline-block !important;
+  width: 6px !important;
+  height: 6px !important;
+  margin-left: 6px !important;
+  background-color: #F05A3C !important;
+  border-radius: 50% !important;
+  vertical-align: middle !important;
+  box-shadow: 0 0 5px rgba(240, 90, 60, 0.6) !important;
+  pointer-events: none !important;
 }

@@ -6,7 +6,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'TISTORY_STYLE_VERSION', '1.6.22' );
+define( 'TISTORY_STYLE_VERSION', '1.6.23' );
 
 /* -------------------------------------------------------------------------
  * Theme setup
@@ -219,6 +219,66 @@ function tistory_style_get_category_total_post_count( $category ) {
 }
 
 /**
+ * 최근 지정된 일수(기본 7일) 이내에 발행된 글이 있는 모든 카테고리(하위 카테고리 및 상위 부모 카테고리 포함) ID 목록 조회 (정적 캐시)
+ */
+function wisdom_desk_get_categories_with_new_posts( $days = 7 ) {
+	static $new_cat_ids = null;
+	if ( null !== $new_cat_ids ) {
+		return $new_cat_ids;
+	}
+
+	$days = apply_filters( 'wisdom_desk_new_post_days', $days );
+	$recent_posts = get_posts(
+		array(
+			'posts_per_page' => 100,
+			'post_status'    => 'publish',
+			'date_query'     => array(
+				array(
+					'after' => $days . ' days ago',
+				),
+			),
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
+		)
+	);
+
+	$cat_ids = array();
+	if ( ! empty( $recent_posts ) ) {
+		foreach ( $recent_posts as $post_id ) {
+			$post_cats = get_the_category( $post_id );
+			if ( ! empty( $post_cats ) ) {
+				foreach ( $post_cats as $cat ) {
+					$cat_ids[ (int) $cat->term_id ] = true;
+					// 서브카테고리에 글이 등록된 경우 상위(부모/조상) 카테고리에도 도트가 켜지도록 등록
+					$ancestors = get_ancestors( $cat->term_id, 'category' );
+					if ( ! empty( $ancestors ) ) {
+						foreach ( $ancestors as $ancestor_id ) {
+							$cat_ids[ (int) $ancestor_id ] = true;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	$new_cat_ids = array_keys( $cat_ids );
+	return $new_cat_ids;
+}
+
+/**
+ * 특정 카테고리(또는 그 서브카테고리)에 최근 발행된 새 글이 있는지 확인
+ */
+if ( ! function_exists( 'wisdom_desk_category_has_new_post' ) ) {
+	function wisdom_desk_category_has_new_post( $cat_id, $days = 7 ) {
+		if ( ! $cat_id ) {
+			return false;
+		}
+		$new_cats = wisdom_desk_get_categories_with_new_posts( $days );
+		return in_array( (int) $cat_id, $new_cats, true );
+	}
+}
+
+/**
  * Category & sub-category sidebar list (skin: box-category box-category-2depth)
  */
 function tistory_style_category_sidebar() {
@@ -234,21 +294,30 @@ function tistory_style_category_sidebar() {
 				'parent'     => $category->term_id,
 			)
 		);
-		$parent_count = tistory_style_get_category_total_post_count( $category );
-		echo '<li>';
+		$parent_count   = tistory_style_get_category_total_post_count( $category );
+		$parent_has_new = wisdom_desk_category_has_new_post( $category->term_id );
+		$parent_class   = $parent_has_new ? ' class="has-new-post"' : '';
+		$dot_html       = $parent_has_new ? '<span class="nav-new-dot" aria-label="' . esc_attr__( '새 글', 'tistory-style' ) . '" title="' . esc_attr__( '새 글', 'tistory-style' ) . '"></span>' : '';
+
+		echo '<li' . $parent_class . '>';
 		printf(
-			'<a href="%s" class="link_item">%s <span class="c_cnt">(%d)</span></a>',
+			'<a href="%s" class="link_item">%s%s <span class="c_cnt">(%d)</span></a>',
 			esc_url( get_category_link( $category ) ),
 			esc_html( $category->name ),
+			$dot_html,
 			(int) $parent_count
 		);
 		if ( ! empty( $children ) ) {
 			echo '<ul class="sub_category_list">';
 			foreach ( $children as $child ) {
+				$child_has_new = wisdom_desk_category_has_new_post( $child->term_id );
+				$child_dot     = $child_has_new ? '<span class="nav-new-dot" aria-label="' . esc_attr__( '새 글', 'tistory-style' ) . '" title="' . esc_attr__( '새 글', 'tistory-style' ) . '"></span>' : '';
 				printf(
-					'<li><a href="%s" class="link_sub_item">%s <span class="c_cnt">(%d)</span></a></li>',
+					'<li%s><a href="%s" class="link_sub_item">%s%s <span class="c_cnt">(%d)</span></a></li>',
+					$child_has_new ? ' class="has-new-post"' : '',
 					esc_url( get_category_link( $child ) ),
 					esc_html( $child->name ),
+					$child_dot,
 					(int) $child->count
 				);
 			}

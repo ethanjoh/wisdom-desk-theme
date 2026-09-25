@@ -1,6 +1,38 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.23] - 2026-09-25
+
+### 변경 날짜
+- 2026-09-25
+
+### 변경 목적
+- 서브카테고리에 최근 글(새 글)이 등록되어 있을 때 상단 네비게이션바(GNB)의 상위 카테고리 버튼 및 서브카테고리 메뉴 목록에 오렌지색 도트 인디케이터 표시
+
+### 주요 결정 사항
+- `functions.php`:
+  - 최근 발행 글(기본 7일 이내)의 카테고리 및 상위(부모/조상) 카테고리 ID를 단 1회의 쿼리로 메모리에 정적 캐싱하는 `wisdom_desk_get_categories_with_new_posts()` 및 `wisdom_desk_category_has_new_post()` 등록
+  - 폴백 메뉴 및 사이드바 카테고리 목록(`tistory_style_category_sidebar()`)에서 1차 카테고리(서브카테고리 포함) 및 2차 서브카테고리에 최근 글 존재 시 `<span class="nav-new-dot">` 출력
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.23`으로 상향하여 브라우저 CSS 캐시 즉시 갱신 반영
+- `inc/class-tistory-style-nav-walker.php`:
+  - `Tistory_Style_Nav_Walker::start_el()`에서 카테고리 및 URL 경로 매핑을 통해 최근 글이 있는 메뉴 아이템에 `has-new-post` 클래스 및 `.nav-new-dot` 요소 렌더링
+- `style.css`:
+  - 테마 헤더 버전을 `1.6.23`으로 상향
+  - `.header .area-gnb .category_list > li > a.link_item .nav-new-dot`: 상단 네비게이션바 카드 버튼 우측 상단에 7px 오렌지색(`#F05A3C`) 알림 뱃지 도트 및 은은한 펄스/글로우 애니메이션 적용
+  - `.header .area-gnb .category_list .sub_category_list li a.link_sub_item .nav-new-dot`: 메가메뉴 서브카테고리 항목 텍스트 옆 5px 인라인 오렌지 도트 스타일링
+  - 사이드바/모바일 드로어 메뉴(`.area-aside`) 내 도트 스타일링 동시 지원
+- `CHANGELOG.md`: 버전 1.6.23 변경 사항 기록
+
+### 수정한 파일
+- functions.php
+- inc/class-tistory-style-nav-walker.php
+- style.css
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l functions.php`, `php -l inc/class-tistory-style-nav-walker.php`, `php -l front-page.php` 문법 검사 전체 통과 (No syntax errors detected)
+- `git status` 및 `git diff`를 통한 수정 내역 검증 완료
+
 ## [1.6.22] - 2026-09-21
 
 ### 변경 날짜
