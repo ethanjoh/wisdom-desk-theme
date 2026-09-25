@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.23
+Version: 1.6.24
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -10063,4 +10063,344 @@ body:has(.frontpage-hero) .frontpage-hero {
   vertical-align: middle !important;
   box-shadow: 0 0 5px rgba(240, 90, 60, 0.6) !important;
   pointer-events: none !important;
+}
+
+/* ==========================================================================
+   카테고리/아카이브: 카드형 vs 연도별 보기 전환 및 타임라인 뷰
+   ========================================================================== */
+
+/* 1. 카테고리 헤더 래퍼 (제목 + 보기 토글 버튼 정렬) */
+.archive-modern-list .archive-heading-wrap {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;
+  margin-bottom: 28px !important;
+  border-bottom: 1px solid #e8e8e8 !important;
+}
+
+.archive-modern-list .archive-heading-wrap .title-search {
+  margin: 0 !important;
+  padding: 0 !important;
+  border-bottom: none !important;
+  flex: 1 1 auto !important;
+}
+
+/* 2. 보기 토글 버튼 그룹 */
+.archive-view-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  background: #f1f5f9 !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  padding: 3px !important;
+  gap: 2px !important;
+  box-sizing: border-box !important;
+}
+
+.btn-view-toggle {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 5px 12px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #64748b !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  line-height: 1 !important;
+  user-select: none !important;
+}
+
+.btn-view-toggle svg {
+  display: block !important;
+  stroke: currentColor !important;
+  transition: transform 0.2s ease !important;
+}
+
+.btn-view-toggle:hover {
+  color: #0f172a !important;
+}
+
+.btn-view-toggle.is-active {
+  color: #F05A3C !important;
+  background: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* 3. 연도별 타임라인 뷰 컨테이너 */
+.archive-timeline-view {
+  width: 100% !important;
+  margin: 10px 0 50px !important;
+  box-sizing: border-box !important;
+}
+
+/* 상단 연도 퀵점프 칩 */
+.timeline-year-chips {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 8px !important;
+  margin-bottom: 35px !important;
+  padding-bottom: 16px !important;
+  border-bottom: 1px dashed #e2e8f0 !important;
+}
+
+.chip-year {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #475569 !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 20px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  user-select: none !important;
+}
+
+.chip-year .chip-count {
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: #94a3b8 !important;
+  background: #ffffff !important;
+  padding: 1px 6px !important;
+  border-radius: 10px !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+.chip-year:hover {
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  background: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+
+.chip-year.is-active {
+  background: #F05A3C !important;
+  border-color: #F05A3C !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(240, 90, 60, 0.28) !important;
+}
+
+.chip-year.is-active .chip-count {
+  color: #F05A3C !important;
+  background: #ffffff !important;
+  border-color: transparent !important;
+}
+
+/* 타임라인 수직 구조 */
+.timeline-tree-wrap {
+  position: relative !important;
+  padding-left: 20px !important;
+  box-sizing: border-box !important;
+}
+
+.timeline-tree-wrap:before {
+  content: "" !important;
+  position: absolute !important;
+  top: 14px !important;
+  bottom: 20px !important;
+  left: 31px !important;
+  width: 2px !important;
+  background: linear-gradient(180deg, #F05A3C 0%, #e2e8f0 15%, #e2e8f0 100%) !important;
+}
+
+/* 연도별 그룹 */
+.timeline-year-group {
+  position: relative !important;
+  margin-bottom: 40px !important;
+}
+
+.timeline-year-badge-wrap {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin-bottom: 20px !important;
+  z-index: 2 !important;
+}
+
+.timeline-year-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 4px 14px !important;
+  font-size: 15px !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  background: #1e293b !important;
+  border-radius: 14px !important;
+  letter-spacing: -0.5px !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.timeline-year-group:first-child .timeline-year-badge {
+  background: #F05A3C !important;
+}
+
+.timeline-year-count {
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: #94a3b8 !important;
+}
+
+/* 타임라인 글 목록 */
+.timeline-item-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.timeline-item {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 16px !important;
+  padding: 12px 16px !important;
+  margin-left: 12px !important;
+  margin-bottom: 8px !important;
+  background: #ffffff !important;
+  border: 1px solid #f1f5f9 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-sizing: border-box !important;
+}
+
+.timeline-item:hover {
+  background: #fafafa !important;
+  border-color: #fed7aa !important;
+  box-shadow: 0 4px 12px rgba(240, 90, 60, 0.08) !important;
+  transform: translateX(4px) !important;
+}
+
+.timeline-node {
+  position: absolute !important;
+  left: -17px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  width: 8px !important;
+  height: 8px !important;
+  background: #ffffff !important;
+  border: 2px solid #cbd5e1 !important;
+  border-radius: 50% !important;
+  z-index: 2 !important;
+  transition: all 0.2s ease !important;
+}
+
+.timeline-item:hover .timeline-node {
+  border-color: #F05A3C !important;
+  background: #F05A3C !important;
+  transform: translateY(-50%) scale(1.3) !important;
+}
+
+.timeline-date {
+  flex: 0 0 46px !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #94a3b8 !important;
+  letter-spacing: -0.2px !important;
+}
+
+.timeline-item:hover .timeline-date {
+  color: #F05A3C !important;
+}
+
+.timeline-content {
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.timeline-title-link {
+  text-decoration: none !important;
+  color: inherit !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.timeline-title {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #334155 !important;
+  transition: color 0.18s ease !important;
+  display: block !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  line-height: 1.4 !important;
+}
+
+.timeline-item:hover .timeline-title {
+  color: #F05A3C !important;
+}
+
+.timeline-comments {
+  flex: 0 0 auto !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  color: #94a3b8 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+}
+
+.timeline-thumb-link {
+  flex: 0 0 54px !important;
+  height: 54px !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  background: #f1f5f9 !important;
+  text-decoration: none !important;
+}
+
+.timeline-thumb {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  background-size: cover !important;
+  background-position: center !important;
+  transition: transform 0.25s ease !important;
+}
+
+.timeline-item:hover .timeline-thumb {
+  transform: scale(1.08) !important;
+}
+
+/* 반응형 모바일 */
+@media screen and (max-width: 640px) {
+  .archive-modern-list .archive-heading-wrap {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  .archive-view-toggle {
+    align-self: flex-end !important;
+  }
+  .timeline-tree-wrap {
+    padding-left: 10px !important;
+  }
+  .timeline-tree-wrap:before {
+    left: 21px !important;
+  }
+  .timeline-thumb-link {
+    flex: 0 0 46px !important;
+    height: 46px !important;
+  }
 }

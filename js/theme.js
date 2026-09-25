@@ -107,5 +107,82 @@
 			}
 		} );
 
+		/* Archive view toggle: Card Grid vs. Yearly Timeline */
+		var viewToggleWrap = document.querySelector( '.archive-view-toggle' );
+		var cardGrid       = document.querySelector( '.archive-card-grid' );
+		var pagingArea     = document.querySelector( '.archive-paging' );
+		var timelineView   = document.querySelector( '.archive-timeline-view' );
+
+		if ( viewToggleWrap && cardGrid && timelineView ) {
+			var toggleBtns = viewToggleWrap.querySelectorAll( '.btn-view-toggle' );
+			var storageKey = 'wisdom_desk_archive_view';
+
+			var applyViewMode = function ( mode ) {
+				var isTimeline = mode === 'timeline';
+				toggleBtns.forEach( function ( btn ) {
+					var active = btn.getAttribute( 'data-view' ) === mode;
+					btn.classList.toggle( 'is-active', active );
+					btn.setAttribute( 'aria-pressed', active ? 'true' : 'false' );
+				} );
+
+				if ( isTimeline ) {
+					cardGrid.style.display = 'none';
+					if ( pagingArea ) pagingArea.style.display = 'none';
+					timelineView.style.display = 'block';
+					timelineView.removeAttribute( 'aria-hidden' );
+				} else {
+					cardGrid.style.display = '';
+					if ( pagingArea ) pagingArea.style.display = '';
+					timelineView.style.display = 'none';
+					timelineView.setAttribute( 'aria-hidden', 'true' );
+				}
+			};
+
+			toggleBtns.forEach( function ( btn ) {
+				btn.addEventListener( 'click', function ( e ) {
+					e.preventDefault();
+					var viewMode = btn.getAttribute( 'data-view' );
+					applyViewMode( viewMode );
+					try {
+						localStorage.setItem( storageKey, viewMode );
+					} catch ( err ) {}
+				} );
+			} );
+
+			// 복원: localStorage 확인
+			try {
+				var savedMode = localStorage.getItem( storageKey );
+				if ( savedMode === 'timeline' ) {
+					applyViewMode( 'timeline' );
+				}
+			} catch ( err ) {}
+
+			// 연도 퀵점프 칩 동작 (전체 필터 또는 특정 연도 필터링)
+			var yearChips  = timelineView.querySelectorAll( '.chip-year' );
+			var yearGroups = timelineView.querySelectorAll( '.timeline-year-group' );
+
+			yearChips.forEach( function ( chip ) {
+				chip.addEventListener( 'click', function ( e ) {
+					e.preventDefault();
+					var targetYear = chip.getAttribute( 'data-target-year' );
+
+					yearChips.forEach( function ( c ) {
+						c.classList.toggle( 'is-active', c === chip );
+					} );
+
+					if ( targetYear === 'all' ) {
+						yearGroups.forEach( function ( grp ) {
+							grp.style.display = '';
+						} );
+					} else {
+						yearGroups.forEach( function ( grp ) {
+							var match = grp.getAttribute( 'data-year' ) === targetYear;
+							grp.style.display = match ? '' : 'none';
+						} );
+					}
+				} );
+			} );
+		}
+
 	} );
 } )();
