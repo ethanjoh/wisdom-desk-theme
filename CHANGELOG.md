@@ -1,6 +1,39 @@
 <!-- 프로젝트 변경 이력을 기록하는 문서 -->
 # Changelog
 
+## [1.6.25] - 2026-09-25
+
+### 변경 날짜
+- 2026-09-25
+
+### 변경 목적
+- 카드형 및 연도별 보기 전환 시 기존 카드 목록이 사라지지 않던 문제 수정 (완벽한 상호 배타적 뷰 전환 제어)
+
+### 주요 결정 사항
+- `archive.php`:
+  - 메인 컨테이너 태그에 기본 뷰 클래스 `<main class="archive-modern-list view-card">` 적용
+  - `.archive-timeline-view`의 인라인 `display: none` 제거 후 CSS 클래스 기반 제어로 통일
+- `style.css`:
+  - 테마 헤더 버전을 `1.6.25`로 상향
+  - `.archive-modern-list.view-timeline` 상태일 때 `.archive-card-grid` 및 페이징(`.archive-paging`)을 `display: none !important;`로 완전 숨김 처리하고 `.archive-timeline-view`를 `display: block !important;`로 전환
+  - `.archive-modern-list.view-card` 상태일 때 `.archive-timeline-view`를 `display: none !important;`로 완전 숨김 처리하고 `.archive-card-grid`를 `display: grid !important;`로 복원
+- `js/theme.js`:
+  - `applyViewMode()`에서 메인 컨테이너에 `view-timeline` 및 `view-card` 클래스를 직접 토글하도록 로직 개선
+- `functions.php`:
+  - `TISTORY_STYLE_VERSION` 상수를 `1.6.25`로 상향하여 브라우저 CSS/JS 캐시 즉시 갱신 반영
+- `CHANGELOG.md`: 버전 1.6.25 변경 사항 기록
+
+### 수정한 파일
+- archive.php
+- js/theme.js
+- style.css
+- functions.php
+- CHANGELOG.md
+
+### 테스트 결과
+- `php -l archive.php`, `php -l functions.php`, `php -l js/theme.js` 구문 검사 전체 무오류 통과
+- `git status` 및 `git diff`를 통한 소스 코드 정합성 검증 완료
+
 ## [1.6.24] - 2026-09-25
 
 ### 변경 날짜

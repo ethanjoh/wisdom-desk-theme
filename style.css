@@ -1,7 +1,7 @@
 /*
 Theme Name: Wisdom Desk (github)
 GitHub Theme URI: https://github.com/ethanjoh/wisdom-desk-theme
-Version: 1.6.24
+Version: 1.6.25
 Primary Branch: main
 Author: Ethan Joh
 Author URI: https://wisdomdesk.kr
@@ -10134,6 +10134,30 @@ body:has(.frontpage-hero) .frontpage-hero {
   background: #ffffff !important;
   font-weight: 700 !important;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* 2-1. 뷰 모드 전환 제어 (카드형 ↔ 연도별 타임라인 상호 배타적 전환) */
+.archive-modern-list.view-timeline .archive-card-grid,
+.archive-modern-list.view-timeline .archive-paging,
+.archive-modern-list.view-timeline .area-paging {
+  display: none !important;
+}
+
+.archive-modern-list.view-timeline .archive-timeline-view {
+  display: block !important;
+}
+
+.archive-modern-list.view-card .archive-timeline-view {
+  display: none !important;
+}
+
+.archive-modern-list.view-card .archive-card-grid {
+  display: grid !important;
+}
+
+.archive-modern-list.view-card .archive-paging,
+.archive-modern-list.view-card .area-paging {
+  display: block !important;
 }
 
 /* 3. 연도별 타임라인 뷰 컨테이너 */

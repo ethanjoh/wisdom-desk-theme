@@ -109,11 +109,10 @@
 
 		/* Archive view toggle: Card Grid vs. Yearly Timeline */
 		var viewToggleWrap = document.querySelector( '.archive-view-toggle' );
-		var cardGrid       = document.querySelector( '.archive-card-grid' );
-		var pagingArea     = document.querySelector( '.archive-paging' );
+		var mainArchive    = document.querySelector( '.archive-modern-list' );
 		var timelineView   = document.querySelector( '.archive-timeline-view' );
 
-		if ( viewToggleWrap && cardGrid && timelineView ) {
+		if ( viewToggleWrap && mainArchive && timelineView ) {
 			var toggleBtns = viewToggleWrap.querySelectorAll( '.btn-view-toggle' );
 			var storageKey = 'wisdom_desk_archive_view';
 
@@ -126,14 +125,12 @@
 				} );
 
 				if ( isTimeline ) {
-					cardGrid.style.display = 'none';
-					if ( pagingArea ) pagingArea.style.display = 'none';
-					timelineView.style.display = 'block';
+					mainArchive.classList.remove( 'view-card' );
+					mainArchive.classList.add( 'view-timeline' );
 					timelineView.removeAttribute( 'aria-hidden' );
 				} else {
-					cardGrid.style.display = '';
-					if ( pagingArea ) pagingArea.style.display = '';
-					timelineView.style.display = 'none';
+					mainArchive.classList.remove( 'view-timeline' );
+					mainArchive.classList.add( 'view-card' );
 					timelineView.setAttribute( 'aria-hidden', 'true' );
 				}
 			};

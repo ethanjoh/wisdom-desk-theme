@@ -12,7 +12,7 @@ get_header();
 $description = is_category() ? category_description() : '';
 ?>
 
-<main class="archive-modern-list">
+<main class="archive-modern-list view-card">
 
 	<div class="archive-heading archive-heading-wrap">
 		<h2 class="title-search title-border">
@@ -91,7 +91,7 @@ $description = is_category() ? category_description() : '';
 		}
 		?>
 
-		<div class="archive-timeline-view" style="display: none;" aria-hidden="true">
+		<div class="archive-timeline-view" aria-hidden="true">
 			<?php if ( ! empty( $timeline_by_year ) ) : ?>
 				<!-- 연도 퀵점프 칩 네비게이션 -->
 				<div class="timeline-year-chips" role="navigation" aria-label="<?php esc_attr_e( '연도별 빠른 이동', 'tistory-style' ); ?>">
